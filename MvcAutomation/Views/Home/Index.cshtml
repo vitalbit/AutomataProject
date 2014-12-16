@@ -1,0 +1,17 @@
+﻿@model IEnumerable<MvcAutomation.Models.BlockViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="content">
+    <div class="right">
+        @foreach (MvcAutomation.Models.BlockViewModel block in Model)
+        {
+            <h2><a href="#">@block.Title</a></h2>
+            <div class="articles">
+                @block.Text
+            </div>
+        }
+    </div>
+</div>

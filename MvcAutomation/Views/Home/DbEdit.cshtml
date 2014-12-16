@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "DbEdit";
+}
+
+<div id="content">
+    <div class="right">
+        @using (Html.BeginForm("AddCourse", "Home", FormMethod.Post))
+        {
+            <div class="editor-label">
+                @Html.Label("Course")
+                @Html.DropDownList("C", (List<SelectListItem>)ViewBag.Courses)
+            </div>
+            <div class="editor-field">
+                @Html.TextBox("Course")
+            </div>
+            <br />
+            <input type="submit" value="Добавить" />
+        }
+        <br />
+
+        @using (Html.BeginForm("AddGroup", "Home", FormMethod.Post))
+        {
+            <div class="editor-label">
+                @Html.Label("Group")
+                @Html.DropDownList("G", (List<SelectListItem>)ViewBag.Groups)
+            </div>
+            <div class="editor-field">
+                @Html.TextBox("Group")
+            </div>
+            <br />
+            <input type="submit" value="Добавить" />
+        }
+        <br />
+
+        @using (Html.BeginForm("AddSpeciality", "Home", FormMethod.Post))
+        {
+            <div class="editor-label">
+                @Html.Label("Speciality")
+                @Html.DropDownList("S", (List<SelectListItem>)ViewBag.Specialities)
+            </div>
+            <div class="editor-field">
+                @Html.TextBox("Speciality")
+            </div>
+            <br />
+            <input type="submit" value="Добавить" />
+        }
+        <br />
+
+        @using (Html.BeginForm("AddFaculty", "Home", FormMethod.Post))
+        {
+            <div class="editor-label">
+                @Html.Label("Faculty")
+                @Html.DropDownList("F", (List<SelectListItem>)ViewBag.Faculties)
+            </div>
+            <div class="editor-field">
+                @Html.TextBox("Faculty")
+            </div>
+            <br />
+            <input type="submit" value="Добавить" />
+        }
+        <br />
+    </div>
+</div>

@@ -1,0 +1,18 @@
+﻿@model List<MvcAutomation.Models.TestResultViewModel>
+
+@{
+    ViewBag.Title = "TestResult";
+}
+
+<div id="content">
+    <div class="right">
+        <h2>TestResult</h2>
+        @foreach (MvcAutomation.Models.TestResultViewModel test in Model)
+        {
+            <br />
+            <br />
+            <h2>@test.TestName</h2>
+            <p>Оценка: @test.Result</p>
+        }
+    </div>
+</div>

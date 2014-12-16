@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/style.css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <div id="wrap">
+
+        <div id="header">
+            <h1><a href="/Home/Index">Теория автоматов и формальных языков</a></h1>
+        </div>
+
+        <div id="menu">
+            <ul>
+                <li><a href="/Home/Index">Домашняя</a></li>
+                <li><a href="/Test/Index">Тесты</a></li>
+                <li><a href="/Material/Index">Дополнительный материал</a></li>
+                <li><a href="/About/Index">О сайте</a></li>
+            </ul>
+        </div>
+
+        @RenderBody()
+
+        <div class="left">
+            @if (TempData["role"] == null)
+            {
+                using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                {
+                    <h2>Вход в систему</h2>
+                    @Html.Label("Имя пользователя")
+                    @Html.TextBox("Login")
+                    @Html.Label("Пароль")
+                    @Html.Password("Password")
+                    <p>
+                        <br />
+                        <input type="submit" value="Вход" />
+                        <a href="/Home/Registration">Регистрация</a>
+                    </p>
+                }
+            }
+            else
+            {
+                <div>
+                    Добро пожаловать,
+                    @(((BLL.Interface.Entities.UserEntity)TempData["user"]).FirstName)!
+                </div>
+                if ((string)TempData["role"] == "User")
+                {
+                    <h2>Меню</h2>
+                    <ul>
+                        <li><a href="/Home/TestResult">Тесты</a></li>
+                        <li><a href="/Home/Settings">Настройки</a></li>
+                        <li><a href="/Home/LogOff">Выход</a></li>
+                    </ul>
+                }
+                else if ((string)TempData["role"] == "Admin")
+                {
+                    <h2>Меню</h2>
+                    <ul>
+                        <li><a href="/Home/DbEdit">Управление базой данных</a></li>
+                        <li><a href="#">Проверка тестов</a></li>
+                        <li><a href="/Home/CreateTest">Добавление теста</a></li>
+                        <li><a href="/Home/Settings">Настройки</a></li>
+                        <li><a href="/Home/LogOff">Выход</a></li>
+                    </ul>
+                }
+                TempData["role"] = TempData["role"];
+                TempData["user"] = TempData["user"];
+            }
+
+        </div>
+        <div style="clear: both;"> </div>
+    </div>
+
+    <div id="footer">
+        Designed by <a href="http://www.free-css-templates.com/">Free CSS Templates</a>, Thanks to <a href="http://www.openwebdesign.org/">website design</a>
+    </div>
+
+
+</body>
+</html>

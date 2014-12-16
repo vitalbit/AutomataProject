@@ -1,0 +1,102 @@
+﻿@model MvcAutomation.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Registration";
+}
+
+<div id="content">
+    <div class="right">
+        <h2>Registration</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>UserViewModel</legend>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Nickname)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Nickname)
+                    @Html.ValidationMessageFor(model => model.Nickname)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.FirstName)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.FirstName)
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.LastName)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.LastName)
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Password)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Email)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+
+                <div class="editor-label">
+                    @Html.Label("Course")
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.Course, (List<SelectListItem>)ViewBag.Courses)
+                </div>
+
+                <div class="editor-label">
+                    @Html.Label("Group")
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.Group, (List<SelectListItem>)ViewBag.Groups)
+                </div>
+
+                <div class="editor-label">
+                    @Html.Label("Speciality")
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.Speciality, (List<SelectListItem>)ViewBag.Specialities)
+                </div>
+
+                <div class="editor-label">
+                    @Html.Label("Faculty")
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.Faculty, (List<SelectListItem>)ViewBag.Faculties)
+                </div>
+
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+            </fieldset>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

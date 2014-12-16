@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Settings";
+}
+
+<div id="content">
+    <div class="right">
+        @if (ViewBag.Message != null)
+        {
+            <div>@ViewBag.Message</div>
+        }
+        @using (Html.BeginForm())
+        {
+            <h2>Изменить пароль</h2>
+            <div>
+                @Html.Label("Старый пароль")
+            </div>
+            <div>
+                @Html.Password("OldPassword")
+            </div>
+            <div>
+                @Html.Label("Новый пароль")
+            </div>
+            <div>
+                @Html.Password("NewPassword")
+            </div>
+            <div>
+                @Html.Label("Повторите новый пароль")
+            </div>
+            <div>
+                @Html.Password("RepeatPassword")
+            </div>
+            <div>
+                <input type="submit" value="Изменить пароль" />
+            </div>
+        }
+    </div>
+</div>
