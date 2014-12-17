@@ -137,6 +137,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Convertation\ITestConvert.cs" />
+    <Compile Include="Convertation\XmlConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

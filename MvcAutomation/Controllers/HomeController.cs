@@ -7,6 +7,7 @@ using MvcAutomation.Models;
 using BLL.Interface.Services;
 using BLL.Interface.Entities;
 using System.Web.Security;
+using MvcAutomation.Convertation;
 
 namespace MvcAutomation.Controllers
 {
@@ -22,11 +23,13 @@ namespace MvcAutomation.Controllers
         private readonly IBlockTypeService blockTypeService;
         private readonly IAnswerService answerService;
         private readonly ITestService testService;
+        private readonly ITestConvert convert;
+        private readonly IAttachmentContentService contentService;
 
         public HomeController(IBlockService service1, IUserService service2, 
             IFacultyService service3, ICourseService service4, IGroupService service5, 
             ISpecialityService service6, IRoleService service7, IBlockTypeService service8, 
-            IAnswerService service9, ITestService service10)
+            IAnswerService service9, ITestService service10, IAttachmentContentService service11)
         {
             blockService = service1;
             userService = service2;
@@ -38,6 +41,8 @@ namespace MvcAutomation.Controllers
             blockTypeService = service8;
             answerService = service9;
             testService = service10;
+            contentService = service11;
+            this.convert = new XmlConverter();
         }
 
         //
@@ -260,6 +265,12 @@ namespace MvcAutomation.Controllers
                 string[] temp2 = test.GraphArray;
                 test.GraphArray = new string[test.States * test.Values];
                 temp2.CopyTo(test.GraphArray, 0);
+            }
+            if (TestWork == "Отправить")
+            {
+                AttachmentContentEntity content = new AttachmentContentEntity(){Content = convert.getFromNewTest(test)};
+                contentService.CreateAttachmentContent(content);
+                return RedirectToAction("Index");
             }
             return View(test);
         }
