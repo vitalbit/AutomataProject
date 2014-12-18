@@ -8,6 +8,7 @@ using BLL.Interface.Services;
 using BLL.Interface.Entities;
 using System.Web.Security;
 using MvcAutomation.Convertation;
+using System.IO;
 
 namespace MvcAutomation.Controllers
 {
@@ -26,9 +27,9 @@ namespace MvcAutomation.Controllers
         private readonly ITestConvert convert;
         private readonly IAttachmentContentService contentService;
 
-        public HomeController(IBlockService service1, IUserService service2, 
-            IFacultyService service3, ICourseService service4, IGroupService service5, 
-            ISpecialityService service6, IRoleService service7, IBlockTypeService service8, 
+        public HomeController(IBlockService service1, IUserService service2,
+            IFacultyService service3, ICourseService service4, IGroupService service5,
+            ISpecialityService service6, IRoleService service7, IBlockTypeService service8,
             IAnswerService service9, ITestService service10, IAttachmentContentService service11)
         {
             blockService = service1;
@@ -53,9 +54,11 @@ namespace MvcAutomation.Controllers
             int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
             return View(blockService.GetAllBlockEntities()
                 .Reverse().Where(entity => entity.BlockTypeId == id)
-                .Select(block => new BlockViewModel(){
-                Text = block.Text,
-                Title = block.Title}));
+                .Select(block => new BlockViewModel()
+                {
+                    Text = block.Text,
+                    Title = block.Title
+                }));
         }
 
         [HttpGet]
@@ -63,23 +66,23 @@ namespace MvcAutomation.Controllers
         {
             List<SelectListItem> faculties = new List<SelectListItem>();
 
-            foreach(FacultyEntity fe in facultyService.GetAllFacultyEntities())
-                faculties.Add(new SelectListItem() {Text = fe.Name});
+            foreach (FacultyEntity fe in facultyService.GetAllFacultyEntities())
+                faculties.Add(new SelectListItem() { Text = fe.Name });
 
             List<SelectListItem> groups = new List<SelectListItem>();
 
-            foreach(GroupEntity ge in groupService.GetAllGroupEntities())
-                groups.Add(new SelectListItem() {Text = ge.Name});
+            foreach (GroupEntity ge in groupService.GetAllGroupEntities())
+                groups.Add(new SelectListItem() { Text = ge.Name });
 
             List<SelectListItem> courses = new List<SelectListItem>();
 
-            foreach(CourseEntity ce in courseService.GetAllCourseEntities())
-                courses.Add(new SelectListItem() {Text = ce.Number.ToString()});
+            foreach (CourseEntity ce in courseService.GetAllCourseEntities())
+                courses.Add(new SelectListItem() { Text = ce.Number.ToString() });
 
             List<SelectListItem> specialities = new List<SelectListItem>();
 
-            foreach(SpecialityEntity se in specialityService.GetAllSpecialityEntities())
-                specialities.Add(new SelectListItem() {Text = se.Name});
+            foreach (SpecialityEntity se in specialityService.GetAllSpecialityEntities())
+                specialities.Add(new SelectListItem() { Text = se.Name });
 
             ViewBag.Faculties = faculties;
             ViewBag.Courses = courses;
@@ -268,18 +271,46 @@ namespace MvcAutomation.Controllers
             }
             if (TestWork == "Отправить")
             {
-                AttachmentContentEntity content = new AttachmentContentEntity(){Content = convert.getFromNewTest(test)};
+                AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test) };
                 contentService.CreateAttachmentContent(content);
                 return RedirectToAction("Index");
             }
             return View(test);
         }
+        [HttpGet]
+        public ActionResult AddNews()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public ActionResult AddValue(NewTestViewModel test)
+        public ActionResult AddNews(string title1, string text)
         {
-            
-            return View("CreateTest");
+            int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
+            BlockEntity block = new BlockEntity() { Title = title1, Text = text, BlockTypeId = id };
+            blockService.CreateBlock(block);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AddMaterial()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddMaterial(string description, HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                string fileName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("~/Material/"), fileName);
+                file.SaveAs(path);
+                int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
+                BlockEntity block = new BlockEntity() { Title = fileName, Text = description, BlockTypeId = id };
+                blockService.CreateBlock(block);
+            }
+            return View();
         }
 
         public ActionResult LogOff()
@@ -293,7 +324,7 @@ namespace MvcAutomation.Controllers
         {
             string[] temp = test.GraphArray;
             test.GraphArray = new string[test.States * test.Values];
-            for (int i = 0; i!=test.States; i++)
+            for (int i = 0; i != test.States; i++)
             {
                 for (int j = 0; j != test.Values - 1; j++)
                     test.GraphArray[i * test.Values + j] = temp[i * (test.Values - 1) + j];

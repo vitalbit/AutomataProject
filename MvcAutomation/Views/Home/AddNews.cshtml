@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "AddNews";
+}
+
+<div id="content">
+    <div class="right">
+        <h2>AddNews</h2>
+        @using(Html.BeginForm())
+        {
+            <h3>Заголовок</h3>
+            @Html.TextBox("Title1")
+            <h3>Содержание</h3>
+            @Html.TextArea("Text", new { cols = 70, rows = 23 })
+            <br />
+            <input type="submit" value="Добавить" />
+        }
+    </div>
+</div>

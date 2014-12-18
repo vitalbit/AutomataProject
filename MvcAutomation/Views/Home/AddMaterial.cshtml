@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "AddMaterial";
+}
+<div id="content">
+    <div class="right">
+        <h2>AddMaterial</h2>
+        @using (Html.BeginForm("AddMaterial", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <h3>Описание</h3>
+            @Html.TextArea("Description", new { cols = 70, rows = 10 })
+            <h3>Загрузите файл</h3>
+            <input type="file" name="file" />
+            <br />
+            <input type="submit" value="Загрузить" />
+        }
+    </div>
+</div>

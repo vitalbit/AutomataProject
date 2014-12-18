@@ -251,10 +251,12 @@
     <Content Include="Views\Home\TestResult.cshtml" />
     <Content Include="Views\Home\DbEdit.cshtml" />
     <Content Include="Views\Home\CreateTest.cshtml" />
-    <Content Include="Views\Home\AddValue.cshtml" />
+    <Content Include="Views\Home\AddNews.cshtml" />
+    <Content Include="Views\Home\AddMaterial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Material\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

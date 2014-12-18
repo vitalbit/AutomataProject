@@ -2,4 +2,3 @@ C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\BL
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\BLL.Interface\bin\Debug\BLL.Interface.pdb
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\BLL.Interface\obj\Debug\BLL.Interface.dll
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\BLL.Interface\obj\Debug\BLL.Interface.pdb
-C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\BLL.Interface\obj\Debug\BLL.Interface.csprojResolveAssemblyReference.cache
