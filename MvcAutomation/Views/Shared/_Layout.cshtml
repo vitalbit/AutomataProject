@@ -27,7 +27,7 @@
         @RenderBody()
 
         <div class="left">
-            @if (TempData["role"] == null)
+            @if (HttpContext.Current.User.Identity.Name == "")
             {
                 using (Html.BeginForm("Login", "Home", FormMethod.Post))
                 {
@@ -47,9 +47,9 @@
             {
                 <div>
                     Добро пожаловать,
-                    @(((BLL.Interface.Entities.UserEntity)TempData["user"]).FirstName)!
+                    @(((BLL.Interface.Entities.UserEntity)HttpContext.Current.Items["user"]).FirstName)!
                 </div>
-                if ((string)TempData["role"] == "User")
+                if (Roles.GetRolesForUser(HttpContext.Current.User.Identity.Name)[0] == "User")
                 {
                     <h2>Меню</h2>
                     <ul>
@@ -58,7 +58,7 @@
                         <li><a href="/Home/LogOff">Выход</a></li>
                     </ul>
                 }
-                else if ((string)TempData["role"] == "Admin")
+                else if (Roles.GetRolesForUser(HttpContext.Current.User.Identity.Name)[0] == "Admin")
                 {
                     <h2>Меню</h2>
                     <ul>
@@ -71,8 +71,7 @@
                         <li><a href="/Home/LogOff">Выход</a></li>
                     </ul>
                 }
-                TempData["role"] = TempData["role"];
-                TempData["user"] = TempData["user"];
+                //TempData["user"] = TempData["user"];
             }
 
         </div>

@@ -7,3 +7,4 @@ C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DA
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DAL.Interface\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DAL.Interface\obj\Debug\DAL.Interface.dll
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DAL.Interface\obj\Debug\DAL.Interface.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DAL.Interface\obj\Debug\DAL.Interface.csprojResolveAssemblyReference.cache

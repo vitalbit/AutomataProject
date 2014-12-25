@@ -9,6 +9,7 @@ using BLL.Interface.Entities;
 using System.Web.Security;
 using MvcAutomation.Convertation;
 using System.IO;
+using MvcAutomation.Providers;
 
 namespace MvcAutomation.Controllers
 {
@@ -48,7 +49,7 @@ namespace MvcAutomation.Controllers
 
         //
         // GET: /Home/
-
+        [AllowAnonymous]
         public ActionResult Index()
         {
             int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
@@ -61,6 +62,7 @@ namespace MvcAutomation.Controllers
                 }));
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Registration()
         {
@@ -92,49 +94,72 @@ namespace MvcAutomation.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Registration(UserViewModel user)
         {
-            UserEntity entity = new UserEntity()
+            if (ModelState.IsValid)
             {
-                Nickname = user.Nickname,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Password = user.Password,
-                Email = user.Email,
-                CourseId = courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Number == Int32.Parse(user.Course)).Id,
-                GroupId = groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Name == user.Group).Id,
-                FacultyId = facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Name == user.Faculty).Id,
-                SpecialityId = specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Name == user.Speciality).Id,
-                RoleId = roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Name == "User").Id
-            };
-            userService.CreateUser(entity);
-            return RedirectToAction("/Index");
+                MembershipUser memberUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(user.Nickname, user.FirstName, user.LastName, user.Password, user.Email,
+                    courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Number == Int32.Parse(user.Course)).Id,
+                    groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Name == user.Group).Id,
+                    facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Name == user.Faculty).Id,
+                    specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Name == user.Speciality).Id,
+                    roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Name == "User").Id);
+                if (memberUser != null)
+                {
+                    var userEnt = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname);
+                    if (userEnt != null)
+                    {
+                        HttpContext.Items.Add("user", userEnt);
+                    }
+                    FormsAuthentication.SetAuthCookie(user.Nickname, false);
+                    return RedirectToAction("/Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ошибка при регистрации");
+                }
+            }
+            return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(string login, string password)
         {
-            var user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == login && ent.Password == password);
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                string role = roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Id == user.RoleId).Name;
-                TempData["user"] = user;
-                TempData["role"] = role;
+                if (Membership.ValidateUser(login, password))
+                {
+                    FormsAuthentication.SetAuthCookie(login, true);
+                    var user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == login && ent.Password == password);
+                    if (user != null)
+                    {
+                        HttpContext.Items.Add("user", user);
+                    }
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильный пароль или логин");
+                }
             }
-            return RedirectToAction("Index");
+            return View();
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult Settings()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Settings(string oldPassword, string newPassword, string repeatPassword)
         {
-            UserEntity user = (UserEntity)TempData["user"];
+            UserEntity user = (UserEntity)HttpContext.Items["user"];
             string old = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname).Password;
             if (newPassword == repeatPassword && old == oldPassword)
             {
@@ -147,9 +172,10 @@ namespace MvcAutomation.Controllers
             return View();
         }
 
+        [Authorize(Roles="User")]
         public ActionResult TestResult()
         {
-            UserEntity user = (UserEntity)TempData["user"];
+            UserEntity user = (UserEntity)HttpContext.Items["user"];
             List<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse().Where(ent => ent.UserId == user.Id).ToList();
             List<TestEntity> tests = testService.GetAllTestEntities().Where(ent => answers.Any(ent2 => ent2.TestId == ent.Id)).ToList();
             List<TestResultViewModel> results = new List<TestResultViewModel>();
@@ -160,6 +186,7 @@ namespace MvcAutomation.Controllers
             return View(results);
         }
 
+        [Authorize(Roles="Admin")]
         [HttpGet]
         public ActionResult DbEdit()
         {
@@ -191,6 +218,7 @@ namespace MvcAutomation.Controllers
             return View();
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public ActionResult AddCourse(string course)
         {
@@ -203,6 +231,7 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public ActionResult AddGroup(string group)
         {
@@ -213,6 +242,7 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public ActionResult AddSpeciality(string speciality)
         {
@@ -223,6 +253,7 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public ActionResult AddFaculty(string faculty)
         {
@@ -233,6 +264,8 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
+        [Authorize(Roles="Admin")]
+        [HttpGet]
         public ActionResult CreateTest()
         {
             NewTestViewModel test = new NewTestViewModel()
@@ -247,6 +280,7 @@ namespace MvcAutomation.Controllers
             return View(test);
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public ActionResult CreateTest(NewTestViewModel test, string TestWork)
         {
@@ -277,12 +311,14 @@ namespace MvcAutomation.Controllers
             }
             return View(test);
         }
+        [Authorize(Roles="Admin")]
         [HttpGet]
         public ActionResult AddNews()
         {
             return View();
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public ActionResult AddNews(string title1, string text)
         {
@@ -292,12 +328,14 @@ namespace MvcAutomation.Controllers
             return View();
         }
 
+        [Authorize(Roles="Admin")]
         [HttpGet]
         public ActionResult AddMaterial()
         {
             return View();
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public ActionResult AddMaterial(string description, HttpPostedFileBase file)
         {
@@ -313,10 +351,11 @@ namespace MvcAutomation.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult LogOff()
         {
-            TempData["user"] = null;
-            TempData["role"] = null;
+            HttpContext.Items.Remove("user");
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
 

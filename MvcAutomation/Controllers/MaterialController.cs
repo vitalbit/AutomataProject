@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace MvcAutomation.Controllers
 {
+    [Authorize]
     public class MaterialController : Controller
     {
         private readonly IBlockService blockService;
