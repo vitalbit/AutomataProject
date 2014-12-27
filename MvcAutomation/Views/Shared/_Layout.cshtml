@@ -47,7 +47,7 @@
             {
                 <div>
                     Добро пожаловать,
-                    @(((BLL.Interface.Entities.UserEntity)HttpContext.Current.Items["user"]).FirstName)!
+                    @Request.Cookies["user_name"].Value!
                 </div>
                 if (Roles.GetRolesForUser(HttpContext.Current.User.Identity.Name)[0] == "User")
                 {

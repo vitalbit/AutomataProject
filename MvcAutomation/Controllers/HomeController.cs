@@ -103,15 +103,16 @@ namespace MvcAutomation.Controllers
                 MembershipUser memberUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(user.Nickname, user.FirstName, user.LastName, user.Password, user.Email,
                     courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Number == Int32.Parse(user.Course)).Id,
                     groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Name == user.Group).Id,
-                    facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Name == user.Faculty).Id,
                     specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Name == user.Speciality).Id,
+                    facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Name == user.Faculty).Id,
                     roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Name == "User").Id);
                 if (memberUser != null)
                 {
                     var userEnt = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname);
                     if (userEnt != null)
                     {
-                        HttpContext.Items.Add("user", userEnt);
+                        Response.Cookies["user_name"].Value = userEnt.FirstName;
+                        Response.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);
                     }
                     FormsAuthentication.SetAuthCookie(user.Nickname, false);
                     return RedirectToAction("/Index");
@@ -133,10 +134,11 @@ namespace MvcAutomation.Controllers
                 if (Membership.ValidateUser(login, password))
                 {
                     FormsAuthentication.SetAuthCookie(login, true);
-                    var user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == login && ent.Password == password);
+                    var user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == login);
                     if (user != null)
                     {
-                        HttpContext.Items.Add("user", user);
+                        Response.Cookies["user_name"].Value = user.FirstName;
+                        Response.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);
                     }
                     return RedirectToAction("Index");
                 }
@@ -145,7 +147,7 @@ namespace MvcAutomation.Controllers
                     ModelState.AddModelError("", "Неправильный пароль или логин");
                 }
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -159,7 +161,7 @@ namespace MvcAutomation.Controllers
         [HttpPost]
         public ActionResult Settings(string oldPassword, string newPassword, string repeatPassword)
         {
-            UserEntity user = (UserEntity)HttpContext.Items["user"];
+            UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == User.Identity.Name);
             string old = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname).Password;
             if (newPassword == repeatPassword && old == oldPassword)
             {
@@ -175,7 +177,7 @@ namespace MvcAutomation.Controllers
         [Authorize(Roles="User")]
         public ActionResult TestResult()
         {
-            UserEntity user = (UserEntity)HttpContext.Items["user"];
+            UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == User.Identity.Name);
             List<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse().Where(ent => ent.UserId == user.Id).ToList();
             List<TestEntity> tests = testService.GetAllTestEntities().Where(ent => answers.Any(ent2 => ent2.TestId == ent.Id)).ToList();
             List<TestResultViewModel> results = new List<TestResultViewModel>();
@@ -354,7 +356,7 @@ namespace MvcAutomation.Controllers
         [Authorize]
         public ActionResult LogOff()
         {
-            HttpContext.Items.Remove("user");
+            Response.Cookies["user_name"].Value = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }

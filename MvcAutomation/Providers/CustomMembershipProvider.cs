@@ -177,12 +177,16 @@ namespace MvcAutomation.Providers
         {
             bool isValid = false;
 
-            string pass = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == username).Password;
+            if (username != null && password != null)
+            {
 
-            if (pass != null && Crypto.VerifyHashedPassword(pass, password))
-                isValid = true;
-            else
-                isValid = false;
+                UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == username);
+
+                if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
+                    isValid = true;
+                else
+                    isValid = false;
+            }
             return isValid;
         }
     }
