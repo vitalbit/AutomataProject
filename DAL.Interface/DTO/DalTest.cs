@@ -10,6 +10,7 @@ namespace DAL.Interface.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? OptionId { get; set; }
+        public int? TestCount { get; set; }
+        public int? TestTime { get; set; }
     }
 }

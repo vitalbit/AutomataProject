@@ -26,7 +26,6 @@ namespace DependencyResolver
             Bind<ICourseRepository>().To<CourseRepository>();
             Bind<IFacultyRepository>().To<FacultyRepository>();
             Bind<IGroupRepository>().To<GroupRepository>();
-            Bind<IOptionRepository>().To<OptionRepository>();
             Bind<IRoleRepository>().To<RoleRepository>();
             Bind<ISpecialityRepository>().To<SpecialityRepository>();
             Bind<ITestRepository>().To<TestRepository>();
@@ -41,7 +40,6 @@ namespace DependencyResolver
             Bind<ICourseService>().To<CourseService>();
             Bind<IFacultyService>().To<FacultyService>();
             Bind<IGroupService>().To<GroupService>();
-            Bind<IOptionService>().To<OptionService>();
             Bind<IRoleService>().To<RoleService>();
             Bind<ISpecialityService>().To<SpecialityService>();
             Bind<ITestService>().To<TestService>();

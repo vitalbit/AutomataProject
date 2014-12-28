@@ -11,10 +11,10 @@ namespace ORM
     {
         public int TestId { get; set; }
         public string Name { get; set; }
-        public int? OptionId { get; set; }
+        public int? TestCount { get; set; }
+        public int? TestTime { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
         public virtual ICollection<AttachmentContent> AttachmentContents { get; set; }
-        public virtual Option Option { get; set; }
         public Test()
         {
             AttachmentContents = new HashSet<AttachmentContent>();

@@ -182,26 +182,6 @@ namespace BLL.Mappers
             };
         }
 
-        public static DalOption ToDalOption(this OptionEntity option)
-        {
-            return new DalOption()
-            {
-                Id = option.Id,
-                TestCount = option.TestCount,
-                TestTime = option.TestTime
-            };
-        }
-
-        public static OptionEntity ToBllOption(this DalOption option)
-        {
-            return new OptionEntity()
-            {
-                Id = option.Id,
-                TestCount = option.TestCount,
-                TestTime = option.TestTime
-            };
-        }
-
         public static DalRole ToDalRole(this RoleEntity role)
         {
             return new DalRole()
@@ -244,7 +224,8 @@ namespace BLL.Mappers
             {
                 Id = test.Id,
                 Name = test.Name,
-                OptionId = test.OptionId
+                TestCount = test.TestCount,
+                TestTime = test.TestTime
             };
         }
 
@@ -254,7 +235,8 @@ namespace BLL.Mappers
             {
                 Id = test.Id,
                 Name = test.Name,
-                OptionId = test.OptionId
+                TestCount = test.TestCount,
+                TestTime = test.TestTime
             };
         }
     }

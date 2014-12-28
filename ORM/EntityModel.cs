@@ -20,7 +20,6 @@ namespace ORM
         public DbSet<Course> Courses { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<Option> Options { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<Test> Tests { get; set; }

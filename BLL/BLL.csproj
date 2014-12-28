@@ -48,7 +48,6 @@
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Services\FacultyService.cs" />
     <Compile Include="Services\GroupService.cs" />
-    <Compile Include="Services\OptionService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\SpecialityService.cs" />
     <Compile Include="Services\TestService.cs" />

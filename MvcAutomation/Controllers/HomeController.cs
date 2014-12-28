@@ -313,6 +313,7 @@ namespace MvcAutomation.Controllers
             }
             return View(test);
         }
+
         [Authorize(Roles="Admin")]
         [HttpGet]
         public ActionResult AddNews()

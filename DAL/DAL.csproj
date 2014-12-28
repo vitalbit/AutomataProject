@@ -53,7 +53,6 @@
     <Compile Include="Concrete\CourseRepository.cs" />
     <Compile Include="Concrete\FacultyRepository.cs" />
     <Compile Include="Concrete\GroupRepository.cs" />
-    <Compile Include="Concrete\OptionRepository.cs" />
     <Compile Include="Concrete\RoleRepository.cs" />
     <Compile Include="Concrete\SpecialityRepository.cs" />
     <Compile Include="Concrete\TestRepository.cs" />

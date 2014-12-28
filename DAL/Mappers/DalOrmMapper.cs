@@ -182,26 +182,6 @@ namespace DAL.Mappers
             };
         }
 
-        public static DalOption ToDalOption(this Option option)
-        {
-            return new DalOption()
-            {
-                Id = option.OptionId,
-                TestCount = option.TestCount,
-                TestTime = option.TestTime
-            };
-        }
-
-        public static Option ToOrmOption(this DalOption option)
-        {
-            return new Option()
-            {
-                OptionId = option.Id,
-                TestCount = option.TestCount,
-                TestTime = option.TestTime
-            };
-        }
-
         public static DalRole ToDalRole(this Role role)
         {
             return new DalRole()
@@ -244,7 +224,8 @@ namespace DAL.Mappers
             {
                 Id = test.TestId,
                 Name = test.Name,
-                OptionId = test.OptionId
+                TestCount = test.TestCount,
+                TestTime = test.TestTime
             };
         }
 
@@ -254,7 +235,8 @@ namespace DAL.Mappers
             {
                 TestId = test.Id,
                 Name = test.Name,
-                OptionId = test.OptionId
+                TestCount = test.TestCount,
+                TestTime = test.TestTime
             };
         }
     }

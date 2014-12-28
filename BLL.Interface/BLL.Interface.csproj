@@ -46,7 +46,6 @@
     <Compile Include="Entities\CourseEntity.cs" />
     <Compile Include="Entities\FacultyEntity.cs" />
     <Compile Include="Entities\GroupEntity.cs" />
-    <Compile Include="Entities\OptionEntity.cs" />
     <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\SpecialityEntity.cs" />
     <Compile Include="Entities\TestEntity.cs" />
@@ -59,7 +58,6 @@
     <Compile Include="Services\ICourseService.cs" />
     <Compile Include="Services\IFacultyService.cs" />
     <Compile Include="Services\IGroupService.cs" />
-    <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRoleService.cs" />
     <Compile Include="Services\ISpecialityService.cs" />
     <Compile Include="Services\ITestService.cs" />
