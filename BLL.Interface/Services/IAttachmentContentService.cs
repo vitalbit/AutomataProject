@@ -11,5 +11,7 @@ namespace BLL.Interface.Services
     {
         IEnumerable<AttachmentContentEntity> GetAllAttachmentContentEntities();
         void CreateAttachmentContent(AttachmentContentEntity content);
+        IEnumerable<AttachmentContentEntity> GetTestAttachmentContentEntities();
+        IEnumerable<AttachmentContentEntity> GetAnswerAttachmentContentEntities();
     }
 }

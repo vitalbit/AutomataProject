@@ -31,5 +31,11 @@ namespace BLL.Services
             testRepository.Create(test.ToDalTest());
             uow.Commit();
         }
+
+
+        public void SetAttachmentContent(TestEntity test, IEnumerable<AttachmentContentEntity> contents)
+        {
+            testRepository.SetAttachmentContent(test.ToDalTest(), contents.Select(ent => ent.ToDalAttachmentContent()));
+        }
     }
 }

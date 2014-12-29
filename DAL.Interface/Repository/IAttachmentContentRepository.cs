@@ -9,5 +9,7 @@ namespace DAL.Interface.Repository
 {
     public interface IAttachmentContentRepository : IRepository<DalAttachmentContent>
     {
+        IEnumerable<DalAttachmentContent> GetAllTestFiles();
+        IEnumerable<DalAttachmentContent> GetAllAnswerFiles();
     }
 }

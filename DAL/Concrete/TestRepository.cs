@@ -51,5 +51,17 @@ namespace DAL.Concrete
         {
             context.Entry(e.ToOrmTest()).State = EntityState.Modified;
         }
+
+        public void SetAttachmentContent(DalTest test, IEnumerable<DalAttachmentContent> contents)
+        {
+            IEnumerable<AttachmentContent> cont = context.Set<AttachmentContent>().ToList().Where(ent => contents.Any(ent1 => ent1.Id == ent.AttachmentContentId));
+            Test t = context.Set<Test>().ToList().FirstOrDefault(ent => ent.TestId == test.Id);
+            foreach(var content in cont)
+            {
+                t.AttachmentContents.Add(content);
+            }
+            context.Set<Test>().Attach(t);
+            context.Entry(t).State = EntityState.Modified;
+        }
     }
 }

@@ -272,6 +272,7 @@ namespace MvcAutomation.Controllers
         {
             NewTestViewModel test = new NewTestViewModel()
             {
+                TestName = "",
                 GraphArray = new string[1],
                 FinalStates = new int?[1],
                 Regex = "",
@@ -307,11 +308,35 @@ namespace MvcAutomation.Controllers
             }
             if (TestWork == "Отправить")
             {
-                AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test) };
+                AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test), FileName = test.TestName };
                 contentService.CreateAttachmentContent(content);
                 return RedirectToAction("Index");
             }
             return View(test);
+        }
+
+        [Authorize(Roles="Admin")]
+        [HttpGet]
+        public ActionResult AddTest()
+        {
+            List<AddTestViewModel> content = contentService.GetTestAttachmentContentEntities().Select(ent => new AddTestViewModel() { AttachmentContentId = ent.Id, FileName = ent.FileName }).ToList();
+            return View(content);
+        }
+
+        [Authorize(Roles="Admin")]
+        [HttpPost]
+        public ActionResult AddTest(string test_name, int[] sel_test, int count, int time)
+        {
+            TestEntity te = new TestEntity() {Name = test_name, TestCount = count, TestTime = time};
+            testService.CreateTest(te);
+            te = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
+            List<AttachmentContentEntity> contents = new List<AttachmentContentEntity>();
+            foreach (var id in sel_test)
+            {
+                contents.Add(contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.Id == id));
+            }
+            testService.SetAttachmentContent(te, contents);
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles="Admin")]

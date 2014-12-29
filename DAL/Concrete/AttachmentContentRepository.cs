@@ -51,5 +51,15 @@ namespace DAL.Concrete
         {
             context.Entry(e.ToOrmAttachmentContent()).State = EntityState.Modified;
         }
+
+        public IEnumerable<DalAttachmentContent> GetAllTestFiles()
+        {
+            return context.Set<AttachmentContent>().ToList().Where(ent => ent.Answer == null && ent.Blocks.Count == 0).Select(ent => ent.ToDalAttachmentContent());
+        }
+
+        public IEnumerable<DalAttachmentContent> GetAllAnswerFiles()
+        {
+            return context.Set<AttachmentContent>().ToList().Where(ent => ent.Answer != null).Select(ent => ent.ToDalAttachmentContent());
+        }
     }
 }

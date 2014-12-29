@@ -144,6 +144,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructura\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\AddTestViewModel.cs" />
     <Compile Include="Models\BlockViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\FacultyViewModel.cs" />
@@ -256,6 +257,7 @@
     <Content Include="Views\Home\CreateTest.cshtml" />
     <Content Include="Views\Home\AddNews.cshtml" />
     <Content Include="Views\Home\AddMaterial.cshtml" />
+    <Content Include="Views\Home\AddTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

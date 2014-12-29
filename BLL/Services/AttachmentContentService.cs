@@ -31,5 +31,16 @@ namespace BLL.Services
             contentRepository.Create(content.ToDalAttachmentContent());
             uow.Commit();
         }
+
+
+        public IEnumerable<AttachmentContentEntity> GetTestAttachmentContentEntities()
+        {
+            return contentRepository.GetAllTestFiles().Select(ent => ent.ToBllAttachmentContent());
+        }
+
+        public IEnumerable<AttachmentContentEntity> GetAnswerAttachmentContentEntities()
+        {
+            return contentRepository.GetAllAnswerFiles().Select(ent => ent.ToBllAttachmentContent());
+        }
     }
 }

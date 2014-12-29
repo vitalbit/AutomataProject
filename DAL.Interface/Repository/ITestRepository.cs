@@ -9,5 +9,6 @@ namespace DAL.Interface.Repository
 {
     public interface ITestRepository : IRepository<DalTest>
     {
+        void SetAttachmentContent(DalTest test, IEnumerable<DalAttachmentContent> contents);
     }
 }

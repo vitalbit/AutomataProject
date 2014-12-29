@@ -15,6 +15,13 @@
             @Html.HiddenFor(model => model.Values)
             @Html.HiddenFor(model => model.States)
             <div class="editor-field">
+                <label>Имя задания</label>
+                <br />
+                @Html.TextBoxFor(model => model.TestName, new { style = "width: 100px" })
+            </div>
+            <div class="editor-field">
+                <label>Регулярное выражение</label>
+                <br />
                 @Html.TextBoxFor(model => model.Regex, new { style = "width: 100px" })
             </div>
             <br />

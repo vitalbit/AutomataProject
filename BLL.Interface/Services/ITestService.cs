@@ -11,5 +11,6 @@ namespace BLL.Interface.Services
     {
         IEnumerable<TestEntity> GetAllTestEntities();
         void CreateTest(TestEntity test);
+        void SetAttachmentContent(TestEntity test, IEnumerable<AttachmentContentEntity> contents);
     }
 }
