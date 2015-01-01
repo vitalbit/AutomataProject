@@ -150,6 +150,7 @@
     <Compile Include="Models\FacultyViewModel.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
     <Compile Include="Models\NewTestViewModel.cs" />
+    <Compile Include="Models\PassingTestViewModel.cs" />
     <Compile Include="Models\SpecialityViewModel.cs" />
     <Compile Include="Models\TestResultViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -258,6 +259,7 @@
     <Content Include="Views\Home\AddNews.cshtml" />
     <Content Include="Views\Home\AddMaterial.cshtml" />
     <Content Include="Views\Home\AddTest.cshtml" />
+    <Content Include="Views\Test\StartTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

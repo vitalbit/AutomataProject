@@ -14,24 +14,24 @@ namespace MvcAutomation.Convertation
             string str = System.Text.Encoding.UTF8.GetString(bytes);
             XDocument doc = XDocument.Parse(str);
             NewTestViewModel model = new NewTestViewModel();
-            model.Regex = (string)doc.Element("Regex");
-            model.States = (int)doc.Element("StateCount");
-            model.Values = (int)doc.Element("ValueCount");
+            model.Regex = (string)doc.Element("AttachmentContent").Element("Regex");
+            model.States = (int)doc.Element("AttachmentContent").Element("StateCount");
+            model.Values = (int)doc.Element("AttachmentContent").Element("ValueCount");
             model.FinalStates = new int?[model.States];
             model.ValuesArray = new string[model.Values];
             model.GraphArray = new string[model.States * model.Values];
             int i = 0;
-            foreach (XElement element in doc.Root.Element("AttachmentContent").Element("ValueArray").Elements("Value"))
+            foreach (XElement element in doc.Element("AttachmentContent").Element("ValueArray").Elements("Value"))
             {
                 model.ValuesArray[i++] = (string)element;
             }
             i = 0;
-            foreach (XElement element in doc.Root.Element("AttachmentContent").Element("StateArray").Elements("State"))
+            foreach (XElement element in doc.Element("AttachmentContent").Element("StateArray").Elements("State"))
             {
                 model.FinalStates[i++] = Int32.Parse((string)element);
             }
             i = 0;
-            foreach (XElement element in doc.Root.Element("AttachmentContent").Element("GraphArray").Elements("Row"))
+            foreach (XElement element in doc.Element("AttachmentContent").Element("GraphArray").Elements("Row"))
             {
                 foreach (XElement element1 in element.Elements("El"))
                 {

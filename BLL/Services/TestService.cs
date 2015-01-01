@@ -37,5 +37,11 @@ namespace BLL.Services
         {
             testRepository.SetAttachmentContent(test.ToDalTest(), contents.Select(ent => ent.ToDalAttachmentContent()));
         }
+
+
+        public IEnumerable<AttachmentContentEntity> GetAttachmentContents(TestEntity test)
+        {
+            return testRepository.GetAttachmentContents(test.ToDalTest()).Select(ent => ent.ToBllAttachmentContent());
+        }
     }
 }

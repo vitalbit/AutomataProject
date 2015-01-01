@@ -8,10 +8,16 @@
     <div class="right">
         @foreach (MvcAutomation.Models.BlockViewModel block in Model)
         {
-            <h2><a href="#">@block.Title</a></h2>
-            <div class="articles">
-                @block.Text
-            </div>
+            using (Html.BeginForm("StartTest", "Test", FormMethod.Get))
+            {
+                <input type="hidden" name="test_name" value="@block.Title" />
+                <h2>@block.Title</h2>
+                <div class="articles">
+                    @block.Text
+                </div>
+                <input type="hidden" name="num" value="0" />
+                <input type="submit" value="Пройти" />
+            }
         }
     </div>
 </div>

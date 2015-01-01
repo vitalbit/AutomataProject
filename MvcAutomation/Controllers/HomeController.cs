@@ -336,6 +336,8 @@ namespace MvcAutomation.Controllers
                 contents.Add(contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.Id == id));
             }
             testService.SetAttachmentContent(te, contents);
+            int idtype = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
+            blockService.CreateBlock(new BlockEntity() { Title = te.Name, Text = "", BlockTypeId = idtype });
             return RedirectToAction("Index");
         }
 

@@ -1,0 +1,59 @@
+﻿@model MvcAutomation.Models.PassingTestViewModel
+
+@{
+    ViewBag.Title = "StartTest";
+}
+
+<div id="content">
+    <div class="right">
+        <h2>@Model.TestName</h2>
+        @using (Html.BeginForm("StartTest", "Test", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(model => model.Values)
+            @Html.HiddenFor(model => model.States)
+            @Html.HiddenFor(model => model.TestNum)
+            @Html.HiddenFor(model => model.TestCount)
+            @Html.HiddenFor(model => model.TestTime)
+            @Html.HiddenFor(model => model.TestName)
+            @Html.HiddenFor(model => model.Regex)
+
+            <label>Регулярное выражение</label>
+            <br />
+            @Html.Label(Model.Regex)
+
+            <br />
+            <div class="editor-field">
+                @for (int j = 0; j != Model.Values; j++)
+                {
+                    @Html.TextBoxFor(val => val.ValuesArray[j], new { style = "width: 20px" })
+                }
+            </div>
+            <br />
+            for (int i = 0; i != Model.States; i++)
+            {
+                <div class="editor-field">
+                    @for (int j = 0; j != Model.Values; j++)
+                    {
+                        @Html.TextBoxFor(val => val.GraphArray[i * Model.Values + j], new { style = "width: 20px" })
+                    }
+                </div>
+            }
+            <br />
+            @Html.Label("Конечные состояния")
+            <br />
+            for (int j = 0; j != Model.States; j++)
+            {
+                @Html.TextBoxFor(val => val.FinalStates[j], new { style = "width: 20px" })
+            }
+
+            <br />
+
+            <input type="submit" name="TestWork" id="Send" value="Отправить" />
+            <input type="submit" name="TestWork" id="AddValue" value="Добавить значение" />
+            <input type="submit" name="TestWork" id="AddState" value="Добавить состояние" />
+        }
+    </div>
+</div>
