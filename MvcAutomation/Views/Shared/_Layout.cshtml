@@ -4,8 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <style type="text/css">
+        #counter {
+            width: 240px;
+            height: 45px;
+        }
+    </style>
     @Styles.Render("~/Content/style.css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
 
@@ -47,6 +52,7 @@
             {
                 <div>
                     Добро пожаловать,
+                    @{Request.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);}
                     @Request.Cookies["user_name"].Value!
                 </div>
                 if (Roles.GetRolesForUser(HttpContext.Current.User.Identity.Name)[0] == "User")

@@ -4,6 +4,22 @@
     ViewBag.Title = "StartTest";
 }
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/countdown")
+<script>
+    $(function () {
+        var dateNow = new Date();
+        var untilDate = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate(), dateNow.getHours(), dateNow.getMinutes(), dateNow.getSeconds() + $.cookie("time", Number));
+        $('#counter').countdown({
+            until: untilDate,
+            onTick: function (periods) {
+                var sec = $.countdown.periodsToSeconds(periods);
+                $.cookie('time', String(sec));
+            }
+        });
+    });
+</script>
+
 <div id="content">
     <div class="right">
         <h2>@Model.TestName</h2>
@@ -54,6 +70,12 @@
             <input type="submit" name="TestWork" id="Send" value="Отправить" />
             <input type="submit" name="TestWork" id="AddValue" value="Добавить значение" />
             <input type="submit" name="TestWork" id="AddState" value="Добавить состояние" />
+            
+            <br />
+            <br />
+            
+            <div id="counter">
+            </div>
         }
     </div>
 </div>

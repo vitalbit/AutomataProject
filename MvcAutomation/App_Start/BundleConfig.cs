@@ -38,6 +38,12 @@ namespace MvcAutomation
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/countdown").Include(
+                "~/Scripts/jquery.plugin.js",
+                "~/Scripts/jquery.countdown.js",
+                "~/Scripts/jquery.cookie.js"
+                ));
         }
     }
 }

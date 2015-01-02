@@ -52,6 +52,8 @@ namespace MvcAutomation.Controllers
             TestEntity test = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
             List<AttachmentContentEntity> contents = testService.GetAttachmentContents(test).ToList();
             NewTestViewModel newTest = converter.getFromBytes(contents[num].Content);
+            Response.Cookies["time"].Value = (test.TestTime * 60).ToString();
+            Response.Cookies["time"].Expires = DateTime.Now.AddDays(2);
             PassingTestViewModel passing = new PassingTestViewModel()
             {
                 TestNum = num,
@@ -63,7 +65,7 @@ namespace MvcAutomation.Controllers
                 FinalStates = new int?[1],
                 GraphArray = new string[1],
                 TestCount = test.TestCount,
-                TestTime = test.TestTime
+                TestTime = test.TestTime * 60
             };
             return View(passing);
         }
