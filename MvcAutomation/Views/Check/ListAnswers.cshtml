@@ -1,0 +1,32 @@
+﻿@model List<MvcAutomation.Models.ListAnswersViewModel>
+
+@{
+    ViewBag.Title = "ListAnswers";
+}
+
+<div id="content">
+    <div class="right">
+        <h2>ListAnswers</h2>
+        @foreach (var answer in Model)
+        {
+            using (Html.BeginForm("CheckAnswer", "Check", FormMethod.Get))
+            {
+                <div>
+                    <input type="hidden" name="test_id" value="@answer.TestId" />
+                    <input type="hidden" name="content_id" value="@answer.AttachmentContentId" />
+                    @Html.Label(answer.FirstName + " " + answer.LastName)
+                    <br />
+                    @Html.Label("Факультет: " + answer.Faculty)
+                    <br />
+                    @Html.Label("Курс: " + answer.Course)
+                    <br />
+                    @Html.Label("Специальность: " + answer.Speciality)
+                    <br />
+                    @Html.Label("Группа: " + answer.Group)
+                    <br />
+                    <input type="submit" value="Проверить" />
+                </div>
+            }
+        }
+    </div>
+</div>

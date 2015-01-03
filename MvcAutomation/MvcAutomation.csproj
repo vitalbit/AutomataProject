@@ -135,6 +135,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\CheckController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\FacultyViewModel.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
+    <Compile Include="Models\ListAnswersViewModel.cs" />
     <Compile Include="Models\NewTestViewModel.cs" />
     <Compile Include="Models\PassingTestViewModel.cs" />
     <Compile Include="Models\SpecialityViewModel.cs" />
@@ -263,6 +265,7 @@
     <Content Include="Views\Home\AddMaterial.cshtml" />
     <Content Include="Views\Home\AddTest.cshtml" />
     <Content Include="Views\Test\StartTest.cshtml" />
+    <Content Include="Views\Check\ListAnswers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
