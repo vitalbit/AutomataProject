@@ -1,0 +1,48 @@
+﻿@model MvcAutomation.Models.InformationViewModel
+
+@{
+    ViewBag.Title = "StepTwo";
+}
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
+
+<div id="content">
+    <div class="right">
+        @using (Html.BeginForm())
+        {
+            <h2>StepTwo</h2>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Course)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Course, ViewBag.Courses as List<SelectListItem>)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => Model.Group)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Group, (List<SelectListItem>)ViewBag.Groups)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Speciality)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Speciality, (List<SelectListItem>)ViewBag.Specialities)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Faculty)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Faculty, (List<SelectListItem>)ViewBag.Faculties)
+            </div>
+            <p>
+                <input type="submit" value="Сохранить" />
+            </p>
+        }
+    </div>
+</div>

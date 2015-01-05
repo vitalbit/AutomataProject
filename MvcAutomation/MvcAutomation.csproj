@@ -138,6 +138,7 @@
     <Compile Include="Controllers\CheckController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Convertation\ITestConvert.cs" />
     <Compile Include="Convertation\XmlConverter.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\FacultyViewModel.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
+    <Compile Include="Models\InformationViewModel.cs" />
     <Compile Include="Models\ListAnswersViewModel.cs" />
     <Compile Include="Models\NewTestViewModel.cs" />
     <Compile Include="Models\PassingTestViewModel.cs" />
@@ -266,6 +268,8 @@
     <Content Include="Views\Home\AddTest.cshtml" />
     <Content Include="Views\Test\StartTest.cshtml" />
     <Content Include="Views\Check\ListAnswers.cshtml" />
+    <Content Include="Views\Registration\StepOne.cshtml" />
+    <Content Include="Views\Registration\StepTwo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

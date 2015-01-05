@@ -173,6 +173,16 @@ namespace MvcAutomation.Providers
             throw new NotImplementedException();
         }
 
+        public void UpdateUser(string nickname, int? facultyId, int? specialityId, int? courseId, int? groupId)
+        {
+            UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == nickname);
+            user.FacultyId = facultyId;
+            user.SpecialityId = specialityId;
+            user.CourseId = courseId;
+            user.GroupId = groupId;
+            userService.UpdateUser(user);
+        }
+
         public override bool ValidateUser(string username, string password)
         {
             bool isValid = false;

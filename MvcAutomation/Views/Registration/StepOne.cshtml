@@ -1,16 +1,12 @@
 ﻿@model MvcAutomation.Models.UserViewModel
 
 @{
-    ViewBag.Title = "Registration";
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    ViewBag.Title = "StepOne";
 }
 
 <div id="content">
     <div class="right">
-        <h2>Registration</h2>
+        <h2>Шаг 1</h2>
 
         @using (Html.BeginForm())
         {
@@ -18,7 +14,7 @@
             @Html.ValidationSummary(true)
 
             <fieldset>
-                <legend>UserViewModel</legend>
+                <legend>Регистрация</legend>
 
                 <div class="editor-label">
                     @Html.LabelFor(model => model.Nickname)
@@ -60,41 +56,15 @@
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Course)
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownListFor(model => model.Course, ViewBag.Courses as List<SelectListItem>)
-                </div>
-
-                <div class="editor-label">
-                    @Html.LabelFor(model => Model.Group)
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownListFor(model => model.Group, (List<SelectListItem>)ViewBag.Groups)
-                </div>
-
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Speciality)
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownListFor(model => model.Speciality, (List<SelectListItem>)ViewBag.Specialities)
-                </div>
-
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Faculty)
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownListFor(model => model.Faculty, (List<SelectListItem>)ViewBag.Faculties)
-                </div>
                 <p>
-                    <input type="submit" value="Create" />
+                    <input type="submit" value="Зарегистрироваться" />
                 </p>
             </fieldset>
         }
 
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
     </div>
 </div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

@@ -63,69 +63,6 @@ namespace MvcAutomation.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
-        public ActionResult Registration()
-        {
-            List<SelectListItem> faculties = new List<SelectListItem>();
-
-            foreach (FacultyEntity fe in facultyService.GetAllFacultyEntities())
-                faculties.Add(new SelectListItem() { Text = fe.Name });
-
-            List<SelectListItem> groups = new List<SelectListItem>();
-
-            foreach (GroupEntity ge in groupService.GetAllGroupEntities())
-                groups.Add(new SelectListItem() { Text = ge.Name });
-
-            List<SelectListItem> courses = new List<SelectListItem>();
-
-            foreach (CourseEntity ce in courseService.GetAllCourseEntities())
-                courses.Add(new SelectListItem() { Text = ce.Number.ToString() });
-
-            List<SelectListItem> specialities = new List<SelectListItem>();
-
-            foreach (SpecialityEntity se in specialityService.GetAllSpecialityEntities())
-                specialities.Add(new SelectListItem() { Text = se.Name });
-
-            ViewBag.Faculties = faculties;
-            ViewBag.Courses = courses;
-            ViewBag.Groups = groups;
-            ViewBag.Specialities = specialities;
-
-            return View();
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult Registration(UserViewModel user)
-        {
-            if (ModelState.IsValid)
-            {
-                MembershipUser memberUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(user.Nickname, user.FirstName, user.LastName, user.Password, user.Email,
-                    courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Number == Int32.Parse(user.Course)).Id,
-                    groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Name == user.Group).Id,
-                    specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Name == user.Speciality).Id,
-                    facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Name == user.Faculty).Id,
-                    roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Name == "User").Id);
-                if (memberUser != null)
-                {
-                    var userEnt = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname);
-                    if (userEnt != null)
-                    {
-                        Response.Cookies["user_name"].Value = userEnt.FirstName;
-                        Response.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);
-                    }
-                    FormsAuthentication.SetAuthCookie(user.Nickname, false);
-                    return RedirectToAction("/Index");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Ошибка при регистрации");
-                }
-            }
-            return View();
-        }
-
-        [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(string login, string password)
         {

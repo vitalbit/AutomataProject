@@ -50,7 +50,16 @@ namespace DAL.Concrete
         public void Update(DalUser e)
         {
             User user = context.Set<User>().ToList().FirstOrDefault(answ => answ.UserId == e.Id);
+            user.CourseId = e.CourseId;
+            user.Email = e.Email;
+            user.FacultyId = e.FacultyId;
+            user.FirstName = e.FirstName;
+            user.GroupId = e.GroupId;
+            user.LastName = e.LastName;
+            user.Nickname = e.Nickname;
             user.Password = e.Password;
+            user.RoleId = e.RoleId;
+            user.SpecialityId = e.SpecialityId;
             context.Set<User>().Attach(user);
             context.Entry(user).State = EntityState.Modified;
         }
