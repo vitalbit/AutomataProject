@@ -1,10 +1,13 @@
 ﻿using BLL.Interface.Entities;
 using BLL.Interface.Services;
+using CaptchaLibrary;
 using MvcAutomation.Models;
 using MvcAutomation.Providers;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -31,6 +34,26 @@ namespace MvcAutomation.Controllers
             groupService = service6;
         }
 
+        public ActionResult Captcha()
+        {
+            Random rand = new Random(DateTime.Now.Millisecond);
+            StringBuilder sb = new StringBuilder(rand.Next(1111, 9999).ToString());
+            for (int i = 0; i != 4; i++)
+                sb.Append((char)(rand.Next(26) + (int)'a'));
+            string code = sb.ToString();
+
+            Session["code"] = code;
+            CaptchaImage captcha = new CaptchaImage(code, 180, 50);
+
+            this.Response.Clear();
+            this.Response.ContentType = "image/jpeg";
+
+            captcha.Image.Save(this.Response.OutputStream, ImageFormat.Jpeg);
+
+            captcha.Dispose();
+            return null;
+        }
+
         [HttpGet]
         public ActionResult StepOne()
         {
@@ -40,6 +63,10 @@ namespace MvcAutomation.Controllers
         [HttpPost]
         public ActionResult StepOne(UserViewModel user)
         {
+            if (user.Captcha != (string)Session["code"])
+            {
+                ModelState.AddModelError("Captcha", "Текст с картинки введен неверно");
+            }
             if (ModelState.IsValid)
             {
                 MembershipUser memberUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(user.Nickname, user.FirstName, user.LastName, user.Password, user.Email,

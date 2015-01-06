@@ -46,3 +46,5 @@ C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Mv
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\DAL.Interface.pdb
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\ORM.pdb
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\DAL.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\CaptchaLibrary.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\CaptchaLibrary.pdb

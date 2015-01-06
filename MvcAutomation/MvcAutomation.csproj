@@ -258,7 +258,6 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Material\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Home\TestResult.cshtml" />
     <Content Include="Views\Home\DbEdit.cshtml" />
@@ -282,6 +281,10 @@
     <ProjectReference Include="..\BLL.Interface\BLL.Interface.csproj">
       <Project>{8b1df949-a3f2-47b1-bc96-bf8d75fdeb0b}</Project>
       <Name>BLL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CaptchaLibrary\CaptchaLibrary.csproj">
+      <Project>{1804f656-153e-4e01-b849-256d7ab5cf48}</Project>
+      <Name>CaptchaLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\DependencyResolver\DependencyResolver.csproj">
       <Project>{be24352d-18a3-4333-8926-7c59e3d551b7}</Project>

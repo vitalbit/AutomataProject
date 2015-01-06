@@ -1,0 +1,5 @@
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\CaptchaLibrary\bin\Debug\CaptchaLibrary.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\CaptchaLibrary\bin\Debug\CaptchaLibrary.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Debug\CaptchaLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Debug\CaptchaLibrary.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Debug\CaptchaLibrary.pdb

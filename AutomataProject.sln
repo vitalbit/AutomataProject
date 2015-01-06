@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyResolver", "Depen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcAutomation", "MvcAutomation\MvcAutomation.csproj", "{C145A1AE-26EB-4237-9A8A-965086B4E76A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptchaLibrary", "CaptchaLibrary\CaptchaLibrary.csproj", "{1804F656-153E-4E01-B849-256D7AB5CF48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C145A1AE-26EB-4237-9A8A-965086B4E76A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C145A1AE-26EB-4237-9A8A-965086B4E76A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C145A1AE-26EB-4237-9A8A-965086B4E76A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1804F656-153E-4E01-B849-256D7AB5CF48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1804F656-153E-4E01-B849-256D7AB5CF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1804F656-153E-4E01-B849-256D7AB5CF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1804F656-153E-4E01-B849-256D7AB5CF48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
