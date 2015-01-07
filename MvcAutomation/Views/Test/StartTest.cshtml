@@ -14,12 +14,14 @@
             until: untilDate,
             onTick: function (periods) {
                 var sec = $.countdown.periodsToSeconds(periods);
-                $.cookie('time', String(sec));
+                $.cookie('time', String(sec), { path: '/' });
+                $.cookie('min', String(new Date().getMinutes()), { path: '/' });
             },
             onExpiry: function () {
                 $.removeCookie('time');
                 $('#Send').click();
-            }
+            },
+            format: 'HMS'
         });
     });
 </script>

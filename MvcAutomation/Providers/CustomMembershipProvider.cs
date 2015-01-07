@@ -31,6 +31,18 @@ namespace MvcAutomation.Providers
             throw new NotImplementedException();
         }
 
+        public bool ChangePassword(UserEntity user, string oldPassword, string newPassword)
+        {
+            if (Crypto.VerifyHashedPassword(user.Password, oldPassword))
+            {
+                user.Password = Crypto.HashPassword(newPassword);
+                userService.UpdateUser(user);
+                return true;
+            }
+            else
+                return false;
+        }
+
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
         {
             throw new NotImplementedException();

@@ -96,18 +96,16 @@ namespace MvcAutomation.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Settings(string oldPassword, string newPassword, string repeatPassword)
+        public ActionResult Settings(ChangePasswordViewModel pass)
         {
             UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == User.Identity.Name);
-            string old = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname).Password;
-            if (newPassword == repeatPassword && old == oldPassword)
+
+            if (((CustomMembershipProvider)Membership.Provider).ChangePassword(user, pass.OldPassword, pass.NewPassword))
             {
-                user.Password = newPassword;
-                userService.UpdateUser(user);
-                ViewBag.Message = "Пароль изменен!";
-                return View();
+                return RedirectToAction("Index");
             }
-            ViewBag.Message = "Ошибка изменения пароля!";
+            else
+                ModelState.AddModelError("OldPassword", "Неверный пароль");
             return View();
         }
 
@@ -366,6 +364,12 @@ namespace MvcAutomation.Controllers
             Response.Cookies["user_name"].Value = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Mesaage()
+        {
+            return View();
         }
 
         private NewTestViewModel GetNewGraph(NewTestViewModel test)

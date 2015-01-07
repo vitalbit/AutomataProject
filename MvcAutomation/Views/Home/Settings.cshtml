@@ -1,37 +1,37 @@
-﻿@{
+﻿@model MvcAutomation.Models.ChangePasswordViewModel
+
+@{
     ViewBag.Title = "Settings";
 }
 
 <div id="content">
     <div class="right">
-        @if (ViewBag.Message != null)
-        {
-            <div>@ViewBag.Message</div>
-        }
         @using (Html.BeginForm())
         {
-            <h2>Изменить пароль</h2>
-            <div>
-                @Html.Label("Старый пароль")
+            <div class="editor-label">
+                @Html.LabelFor(model => model.OldPassword)
             </div>
-            <div>
-                @Html.Password("OldPassword")
+            <div class="editor-field">
+                @Html.EditorFor(model => model.OldPassword)
+                @Html.ValidationMessageFor(model => model.OldPassword)
             </div>
-            <div>
-                @Html.Label("Новый пароль")
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.NewPassword)
             </div>
-            <div>
-                @Html.Password("NewPassword")
+            <div class="editor-field">
+                @Html.EditorFor(model => model.NewPassword)
+                @Html.ValidationMessageFor(model => model.NewPassword)
             </div>
-            <div>
-                @Html.Label("Повторите новый пароль")
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RepeatPassword)
             </div>
-            <div>
-                @Html.Password("RepeatPassword")
+            <div class="editor-field">
+                @Html.EditorFor(model => model.RepeatPassword)
+                @Html.ValidationMessageFor(model => model.RepeatPassword)
             </div>
-            <div>
-                <input type="submit" value="Изменить пароль" />
-            </div>
+            <input type="submit" value="Изменить" />
         }
     </div>
 </div>

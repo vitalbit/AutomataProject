@@ -54,8 +54,15 @@ namespace MvcAutomation.Controllers
             List<AttachmentContentEntity> contents = testService.GetAttachmentContents(test).ToList();
             num = new Random().Next(contents.Count);
             NewTestViewModel newTest = converter.getFromBytes(contents[num].Content);
-            Response.Cookies["time"].Value = (test.TestTime * 60).ToString();
-            Response.Cookies["time"].Expires = DateTime.Now.AddDays(2);
+            if (Request.Cookies["time"] == null)
+            {
+                Response.Cookies["time"].Value = (test.TestTime * 60).ToString();
+                Response.Cookies["time"].Expires = DateTime.Now.AddDays(2);
+            }
+            else
+            {
+                Response.Cookies["time"].Value = (Int32.Parse(Request.Cookies["time"].Value) - Math.Abs(DateTime.Now.Minute - Int32.Parse(Request.Cookies["min"].Value)) * 60).ToString();
+            }
             PassingTestViewModel passing = new PassingTestViewModel()
             {
                 TestNum = num,
@@ -106,6 +113,8 @@ namespace MvcAutomation.Controllers
                     Values = test.Values,
                     ValuesArray = test.ValuesArray
                 };
+                if (Request.Cookies["time"] != null)
+                    Response.Cookies["time"].Expires = DateTime.Now.AddSeconds(5);
                 AttachmentContentEntity content = new AttachmentContentEntity() { Content = converter.getFromNewTest(newTest) };
                 UserEntity user = userService.GetAllUserEntities().LastOrDefault(ent => ent.Nickname == User.Identity.Name);
                 TestEntity testEnt = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test.TestName);
