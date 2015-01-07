@@ -13,7 +13,7 @@ namespace ORM
         public int AttachmentContentId { get; set; }
         public int? TestId { get; set; }
         public int? UserId { get; set; }
-        public int? Mark { get; set; }
+        public double? Mark { get; set; }
         public virtual AttachmentContent AttachmentContent { get; set; }
         public virtual Test Test { get; set; }
         public virtual User User { get; set; }

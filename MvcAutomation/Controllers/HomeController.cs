@@ -116,11 +116,11 @@ namespace MvcAutomation.Controllers
         {
             UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == User.Identity.Name);
             List<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse().Where(ent => ent.UserId == user.Id).ToList();
-            List<TestEntity> tests = testService.GetAllTestEntities().Where(ent => answers.Any(ent2 => ent2.TestId == ent.Id)).ToList();
+            List<TestEntity> tests = testService.GetAllTestEntities().ToList();
             List<TestResultViewModel> results = new List<TestResultViewModel>();
             for (int i = 0; i != answers.Count; i++)
             {
-                results.Add(new TestResultViewModel() { TestName = tests[i].Name, Result = answers[i].Mark });
+                results.Add(new TestResultViewModel() { TestName = tests.FirstOrDefault(ent => ent.Id == answers[i].TestId).Name, Result = answers[i].Mark });
             }
             return View(results);
         }

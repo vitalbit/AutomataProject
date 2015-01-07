@@ -30,25 +30,38 @@
             </div>
             <br />
             <div class="editor-field">
-                @for (int j = 0; j != Model.Values; j++ )
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @for (int j = 0; j != Model.Values; j++)
                 {
-                @Html.TextBoxFor(val => val.ValuesArray[j], new { style = "width: 20px" })
+                    @Html.TextBoxFor(val => val.ValuesArray[j], new { style = "width: 20px" })
                 }
             </div>
             <br />
             for (int i = 0; i != Model.States; i++)
             {
                 <div class="editor-field">
-                    @for (int j = 0; j != Model.Values; j++ )
+                    <label>
+                        q
+                        @i
+                    </label>
+                    @for (int j = 0; j != Model.Values; j++)
                     {
-                    @Html.TextBoxFor(val => val.GraphArray[i*Model.Values + j], new { style = "width: 20px" })
+                        @Html.TextBoxFor(val => val.GraphArray[i * Model.Values + j], new { style = "width: 20px" })
                     }
                 </div>
             }
             <br />
             @Html.Label("Конечные состояния")
             <br />
-            for (int j = 0; j!= Model.States; j++)
+            for (int j = 0; j != Model.States; j++)
+            {
+                <label>
+                    q
+                    @j
+                </label>
+            }
+            <br />
+            for (int j = 0; j != Model.States; j++)
             {
                 @Html.TextBoxFor(val => val.FinalStates[j], new { style = "width: 20px" })
             }

@@ -31,7 +31,7 @@ namespace MvcAutomation.Controllers
 
         public ActionResult ListAnswers()
         {
-            IEnumerable<AnswerEntity> answers = answerService.GetAllAnswerEntities().Where(ent => ent.Mark == null);
+            IEnumerable<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse();
             List<ListAnswersViewModel> answerList = new List<ListAnswersViewModel>();
             foreach (var answer in answers)
             {
@@ -45,7 +45,8 @@ namespace MvcAutomation.Controllers
                     Course = courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Id == user.CourseId).Number,
                     Faculty = facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Id == user.FacultyId).Name,
                     Group = groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Id == user.GroupId).Name,
-                    Speciality = specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Id == user.SpecialityId).Name
+                    Speciality = specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Id == user.SpecialityId).Name,
+                    Mark = answer.Mark
                 });
             }
             return View(answerList);

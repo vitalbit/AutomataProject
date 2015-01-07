@@ -11,6 +11,6 @@ namespace BLL.Interface.Entities
         public int Id { get; set; }
         public int? TestId { get; set; }
         public int? UserId { get; set; }
-        public int? Mark { get; set; }
+        public double? Mark { get; set; }
     }
 }

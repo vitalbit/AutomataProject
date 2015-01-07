@@ -64,7 +64,7 @@ namespace MvcAutomation.Convertation
                 XElement row = new XElement("Row");
                 for (int j = 0; j!=model.Values; j++)
                 {
-                    row.Add("El", model.GraphArray[i * model.Values + j]);
+                    row.Add(new XElement("El", model.GraphArray[i * model.Values + j]));
                 }
                 graphArray.Add(row);
             }

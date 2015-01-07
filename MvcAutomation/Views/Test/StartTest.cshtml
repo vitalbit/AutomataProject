@@ -15,6 +15,10 @@
             onTick: function (periods) {
                 var sec = $.countdown.periodsToSeconds(periods);
                 $.cookie('time', String(sec));
+            },
+            onExpiry: function () {
+                $.removeCookie('time');
+                $('#Send').click();
             }
         });
     });
@@ -42,6 +46,7 @@
 
             <br />
             <div class="editor-field">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 @for (int j = 0; j != Model.Values; j++)
                 {
                     @Html.TextBoxFor(val => val.ValuesArray[j], new { style = "width: 20px" })
@@ -51,6 +56,10 @@
             for (int i = 0; i != Model.States; i++)
             {
                 <div class="editor-field">
+                    <label>
+                        q
+                        @i
+                    </label>
                     @for (int j = 0; j != Model.Values; j++)
                     {
                         @Html.TextBoxFor(val => val.GraphArray[i * Model.Values + j], new { style = "width: 20px" })
@@ -59,6 +68,14 @@
             }
             <br />
             @Html.Label("Конечные состояния")
+            <br />
+            for (int j = 0; j != Model.States; j++)
+            {
+                <label>
+                    q
+                    @j
+                </label>
+            }
             <br />
             for (int j = 0; j != Model.States; j++)
             {

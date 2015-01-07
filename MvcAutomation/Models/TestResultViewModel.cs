@@ -8,6 +8,6 @@ namespace MvcAutomation.Models
     public class TestResultViewModel
     {
         public string TestName { get; set; }
-        public int? Result { get; set; }
+        public double? Result { get; set; }
     }
 }

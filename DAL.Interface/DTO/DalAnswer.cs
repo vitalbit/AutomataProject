@@ -11,6 +11,6 @@ namespace DAL.Interface.DTO
         public int Id { get; set; }
         public int? TestId { get; set; }
         public int? UserId { get; set; }
-        public int? Mark { get; set; }
+        public double? Mark { get; set; }
     }
 }

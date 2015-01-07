@@ -2,6 +2,7 @@
 using BLL.Interface.Services;
 using MvcAutomation.Convertation;
 using MvcAutomation.Models;
+using MvcAutomation.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace MvcAutomation.Controllers
         {
             TestEntity test = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
             List<AttachmentContentEntity> contents = testService.GetAttachmentContents(test).ToList();
+            num = new Random().Next(contents.Count);
             NewTestViewModel newTest = converter.getFromBytes(contents[num].Content);
             Response.Cookies["time"].Value = (test.TestTime * 60).ToString();
             Response.Cookies["time"].Expires = DateTime.Now.AddDays(2);
@@ -107,11 +109,16 @@ namespace MvcAutomation.Controllers
                 AttachmentContentEntity content = new AttachmentContentEntity() { Content = converter.getFromNewTest(newTest) };
                 UserEntity user = userService.GetAllUserEntities().LastOrDefault(ent => ent.Nickname == User.Identity.Name);
                 TestEntity testEnt = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test.TestName);
+
+                List<AttachmentContentEntity> contents = testService.GetAttachmentContents(testEnt).ToList();
+                NewTestViewModel rightTest = converter.getFromBytes(contents[test.TestNum].Content);
+                double mark = GradeSystem.GradeTest(newTest, rightTest);
+
                 content.FileName = User.Identity.Name + Guid.NewGuid().ToString();
                 contentService.CreateAttachmentContent(content);
                 int id = contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.FileName == content.FileName).Id;
 
-                AnswerEntity answer = new AnswerEntity() { Id = id, TestId = testEnt.Id, UserId = user.Id };
+                AnswerEntity answer = new AnswerEntity() { Id = id, TestId = testEnt.Id, UserId = user.Id, Mark = mark };
                 answerService.CreateAnswer(answer);
 
                 return RedirectToAction("Index");

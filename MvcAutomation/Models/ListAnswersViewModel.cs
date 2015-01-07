@@ -15,5 +15,6 @@ namespace MvcAutomation.Models
         public int? Course { get; set; }
         public string Group { get; set; }
         public string Speciality { get; set; }
+        public double? Mark { get; set; }
     }
 }
