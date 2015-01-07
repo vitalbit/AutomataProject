@@ -12,8 +12,12 @@
             </div>
             <div class="editor-field">
                 @Html.TextBox("Course")
+                @if (Session["CourseMessage"] != null)
+                {
+                    <label>@Html.Label((string)Session["CourseMessage"])</label>
+                    Session["CourseMessage"] = null;
+                }
             </div>
-            <br />
             <input type="submit" value="Добавить" />
         }
         <br />
@@ -26,8 +30,12 @@
             </div>
             <div class="editor-field">
                 @Html.TextBox("Group")
+                @if (Session["GroupMessage"] != null)
+                {
+                    <label>@Html.Label((string)Session["GroupMessage"])</label>
+                    Session["GroupMessage"] = null;
+                }
             </div>
-            <br />
             <input type="submit" value="Добавить" />
         }
         <br />
@@ -40,8 +48,12 @@
             </div>
             <div class="editor-field">
                 @Html.TextBox("Speciality")
+                @if (Session["SpecialityMessage"] != null)
+                {
+                    <label>@Html.Label((string)Session["SpecialityMessage"])</label>
+                    Session["SpecialityMessage"] = null;
+                }
             </div>
-            <br />
             <input type="submit" value="Добавить" />
         }
         <br />
@@ -54,8 +66,12 @@
             </div>
             <div class="editor-field">
                 @Html.TextBox("Faculty")
+                @if (Session["FacultyMessage"] != null)
+                {
+                    <label>@Html.Label((string)Session["FacultyMessage"])</label>
+                    Session["FacultyMessage"] = null;
+                }
             </div>
-            <br />
             <input type="submit" value="Добавить" />
         }
         <br />

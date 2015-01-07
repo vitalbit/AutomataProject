@@ -162,11 +162,15 @@ namespace MvcAutomation.Controllers
         public ActionResult AddCourse(string course)
         {
             int num = 0;
-            Int32.TryParse(course, out num);
-            if (courseService.GetAllCourseEntities().Any(ent => ent.Number == num))
-                return RedirectToAction("DbEdit");
+            if (Int32.TryParse(course, out num))
+            {
+                if (courseService.GetAllCourseEntities().Any(ent => ent.Number == num))
+                    Session["CourseMessage"] = "Данный курс уже существует";
+                else
+                    courseService.CreateCourse(new CourseEntity() { Number = num });
+            }
             else
-                courseService.CreateCourse(new CourseEntity() { Number = num });
+                Session["CourseMessage"] = "Номер курса должен быть числом";
             return RedirectToAction("DbEdit");
         }
 
@@ -174,10 +178,15 @@ namespace MvcAutomation.Controllers
         [HttpPost]
         public ActionResult AddGroup(string group)
         {
-            if (groupService.GetAllGroupEntities().Any(ent => ent.Name == group))
-                return RedirectToAction("DbEdit");
+            if (group != "")
+            {
+                if (groupService.GetAllGroupEntities().Any(ent => ent.Name == group))
+                    Session["GroupMessage"] = "Данная группа уже существует";
+                else
+                    groupService.CreateGroup(new GroupEntity() { Name = group });
+            }
             else
-                groupService.CreateGroup(new GroupEntity() { Name = group });
+                Session["GroupMessage"] = "Введите название либо номер группы";
             return RedirectToAction("DbEdit");
         }
 
@@ -185,10 +194,15 @@ namespace MvcAutomation.Controllers
         [HttpPost]
         public ActionResult AddSpeciality(string speciality)
         {
-            if (specialityService.GetAllSpecialityEntities().Any(ent => ent.Name == speciality))
-                return RedirectToAction("DbEdit");
+            if (speciality != "")
+            {
+                if (specialityService.GetAllSpecialityEntities().Any(ent => ent.Name == speciality))
+                    Session["SpecialityMessage"] = "Данная специальность уже существует";
+                else
+                    specialityService.CreateSpeciality(new SpecialityEntity() { Name = speciality });
+            }
             else
-                specialityService.CreateSpeciality(new SpecialityEntity() { Name = speciality });
+                Session["SpecialityMessage"] = "Введите название специальности";
             return RedirectToAction("DbEdit");
         }
 
@@ -196,10 +210,15 @@ namespace MvcAutomation.Controllers
         [HttpPost]
         public ActionResult AddFaculty(string faculty)
         {
-            if (facultyService.GetAllFacultyEntities().Any(ent => ent.Name == faculty))
-                return RedirectToAction("DbEdit");
+            if (faculty != "")
+            {
+                if (facultyService.GetAllFacultyEntities().Any(ent => ent.Name == faculty))
+                    Session["FacultyMessage"] = "Данный факультет уже существует";
+                else
+                    facultyService.CreateFaculty(new FacultyEntity() { Name = faculty });
+            }
             else
-                facultyService.CreateFaculty(new FacultyEntity() { Name = faculty });
+                Session["FacultyMessage"] = "Введите навание факультета";
             return RedirectToAction("DbEdit");
         }
 
@@ -245,9 +264,16 @@ namespace MvcAutomation.Controllers
             }
             if (TestWork == "Отправить")
             {
-                AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test), FileName = test.TestName };
-                contentService.CreateAttachmentContent(content);
-                return RedirectToAction("Index");
+                if (test.Regex == null)
+                    Session["CreateMessage"] = "Регулярное выражение не должно быть пусто";
+                else if (test.TestName == null)
+                    Session["CreateMessage"] = "Имя теста не должно быть пустым";
+                else
+                {
+                    AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test), FileName = test.TestName };
+                    contentService.CreateAttachmentContent(content);
+                    return RedirectToAction("Index");
+                }
             }
             return View(test);
         }
@@ -262,20 +288,33 @@ namespace MvcAutomation.Controllers
 
         [Authorize(Roles="Admin")]
         [HttpPost]
-        public ActionResult AddTest(string test_name, int[] sel_test, int count, int time)
+        public ActionResult AddTest(string test_name, int?[] sel_test, int? count, int? time)
         {
-            TestEntity te = new TestEntity() {Name = test_name, TestCount = count, TestTime = time};
-            testService.CreateTest(te);
-            te = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
-            List<AttachmentContentEntity> contents = new List<AttachmentContentEntity>();
-            foreach (var id in sel_test)
+            if (test_name == "")
+                Session["TestResult"] = "Введите имя теста";
+            else if (sel_test == null || sel_test.Length == 0)
+                Session["TestResult"] = "Выберите хотябы один тест";
+            else if (count == null || count > sel_test.Length)
+                Session["TestResult"] = "Количество тестов должно быть не больше количество выбранных тестов";
+            else if (time == null || time <= 0)
+                Session["TestResult"] = "Время должно быть больше 0";
+            else
             {
-                contents.Add(contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.Id == id));
+                TestEntity te = new TestEntity() { Name = test_name, TestCount = count, TestTime = time };
+                testService.CreateTest(te);
+                te = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
+                List<AttachmentContentEntity> contents = new List<AttachmentContentEntity>();
+                foreach (var id in sel_test)
+                {
+                    contents.Add(contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.Id == id));
+                }
+                testService.SetAttachmentContent(te, contents);
+                int idtype = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
+                blockService.CreateBlock(new BlockEntity() { Title = te.Name, Text = "", BlockTypeId = idtype });
+                Session["TestResult"] = "Тест создан";
+                return RedirectToAction("Index");
             }
-            testService.SetAttachmentContent(te, contents);
-            int idtype = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
-            blockService.CreateBlock(new BlockEntity() { Title = te.Name, Text = "", BlockTypeId = idtype });
-            return RedirectToAction("Index");
+            return RedirectToAction("AddTest");
         }
 
         [Authorize(Roles="Admin")]
@@ -314,7 +353,10 @@ namespace MvcAutomation.Controllers
                 int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
                 BlockEntity block = new BlockEntity() { Title = fileName, Text = description, BlockTypeId = id };
                 blockService.CreateBlock(block);
+                Session["FileResult"] = "Материал успешно добавлен";
             }
+            else
+                Session["FileResult"] = "Загрузите файл";
             return View();
         }
 

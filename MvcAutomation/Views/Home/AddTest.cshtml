@@ -6,7 +6,11 @@
 
 <div id="content">
     <div class="right">
-        <h2>AddTest</h2>
+        @if (Session["TestResult"] != null)
+        {
+            <h2>@Session["TestResult"]</h2>
+            Session["TestResult"] = null;
+        }
         @using (Html.BeginForm())
         {
             <label>Название теста</label>

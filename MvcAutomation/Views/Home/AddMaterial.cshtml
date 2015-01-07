@@ -3,7 +3,12 @@
 }
 <div id="content">
     <div class="right">
-        <h2>AddMaterial</h2>
+        @if (Session["FileResult"] != null)
+        { 
+            <h2>@Session["FileResult"]</h2>
+            Session["FileResult"] = null;
+        }
+        
         @using (Html.BeginForm("AddMaterial", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <h3>Описание</h3>

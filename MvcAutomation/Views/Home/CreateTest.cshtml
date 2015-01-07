@@ -6,7 +6,11 @@
 
 <div id="content">
     <div class="right">
-        <h2>CreateTest</h2>
+        @if (Session["CreateMessage"] != null)
+        {
+            <h2>@Session["CreateMessage"]</h2>
+            Session["CreateMessage"] = null;
+        }
         @using (Html.BeginForm("CreateTest", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
