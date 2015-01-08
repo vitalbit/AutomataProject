@@ -1,19 +1,19 @@
-﻿using MvcAutomation.Models;
+﻿using ModelEntityLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
 
-namespace MvcAutomation.Convertation
+namespace XMLConvertation
 {
     public class XmlConverter : ITestConvert
     {
-        public NewTestViewModel getFromBytes(byte[] bytes)
+        public NewTestEntityModel getFromBytes(byte[] bytes)
         {
             string str = System.Text.Encoding.UTF8.GetString(bytes);
             XDocument doc = XDocument.Parse(str);
-            NewTestViewModel model = new NewTestViewModel();
+            NewTestEntityModel model = new NewTestEntityModel();
             model.Regex = (string)doc.Element("AttachmentContent").Element("Regex");
             model.States = (int)doc.Element("AttachmentContent").Element("StateCount");
             model.Values = (int)doc.Element("AttachmentContent").Element("ValueCount");
@@ -28,7 +28,9 @@ namespace MvcAutomation.Convertation
             i = 0;
             foreach (XElement element in doc.Element("AttachmentContent").Element("StateArray").Elements("State"))
             {
-                model.FinalStates[i++] = Int32.Parse((string)element);
+                int num;
+                if (Int32.TryParse((string)element, out num))
+                    model.FinalStates[i++] = num;
             }
             i = 0;
             foreach (XElement element in doc.Element("AttachmentContent").Element("GraphArray").Elements("Row"))
@@ -41,7 +43,7 @@ namespace MvcAutomation.Convertation
             return model;
         }
 
-        public byte[] getFromNewTest(NewTestViewModel model)
+        public byte[] getFromNewTest(NewTestEntityModel model)
         {
             XDocument doc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"));
             XElement head = new XElement("AttachmentContent");

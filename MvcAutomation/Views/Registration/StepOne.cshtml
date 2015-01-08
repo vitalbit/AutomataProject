@@ -1,12 +1,12 @@
 ﻿@model MvcAutomation.Models.UserViewModel
 
 @{
-    ViewBag.Title = "StepOne";
+    ViewBag.Title = "Регистрация (шаг первый)";
 }
 
 <div id="content">
     <div class="right">
-        <h2>Шаг 1</h2>
+        <h2>Регистрация</h2>
 
         @using (Html.BeginForm())
         {
@@ -14,7 +14,7 @@
             @Html.ValidationSummary(true)
 
             <fieldset>
-                <legend>Регистрация</legend>
+                <legend>Шаг 1</legend>
 
                 <div class="editor-label">
                     @Html.LabelFor(model => model.Nickname)

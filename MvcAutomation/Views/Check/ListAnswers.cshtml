@@ -1,12 +1,11 @@
 ﻿@model List<MvcAutomation.Models.ListAnswersViewModel>
 
 @{
-    ViewBag.Title = "ListAnswers";
+    ViewBag.Title = "Список ответов";
 }
 
 <div id="content">
     <div class="right">
-        <h2>ListAnswers</h2>
         @foreach (var answer in Model)
         {
             using (Html.BeginForm("CheckAnswer", "Check", FormMethod.Get))
@@ -28,6 +27,7 @@
                     <br />
                     <input type="submit" value="Просмотреть" />
                 </div>
+            <br />
             }
         }
     </div>

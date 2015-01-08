@@ -1,12 +1,13 @@
 ﻿using BLL.Interface.Entities;
 using BLL.Interface.Services;
-using MvcAutomation.Convertation;
 using MvcAutomation.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using XMLConvertation;
+using MvcAutomation.Mappers;
 
 namespace MvcAutomation.Controllers
 {
@@ -23,7 +24,7 @@ namespace MvcAutomation.Controllers
 
         public CheckController(IAnswerService service1, IUserService service2, ICourseService service3,
             IFacultyService service4, IGroupService service5, ISpecialityService service6,
-            IAttachmentContentService service7)
+            IAttachmentContentService service7, ITestConvert convert)
         {
             answerService = service1;
             userService = service2;
@@ -32,7 +33,7 @@ namespace MvcAutomation.Controllers
             groupService = service5;
             specialityService = service6;
             contentService = service7;
-            convert = new XmlConverter();
+            this.convert = convert;
         }
 
         public ActionResult ListAnswers()
@@ -63,7 +64,7 @@ namespace MvcAutomation.Controllers
         public ActionResult CheckAnswer(int test_id, int content_id)
         {
             AttachmentContentEntity content = contentService.GetAnswerAttachmentContentEntities().FirstOrDefault(ent => ent.Id == content_id);
-            NewTestViewModel test = convert.getFromBytes(content.Content);
+            NewTestViewModel test = convert.getFromBytes(content.Content).ToView();
             return View(test);
         }
     }

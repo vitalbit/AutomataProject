@@ -1,0 +1,4 @@
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ModelEntityLayer\bin\Debug\ModelEntityLayer.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ModelEntityLayer\bin\Debug\ModelEntityLayer.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ModelEntityLayer\obj\Debug\ModelEntityLayer.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ModelEntityLayer\obj\Debug\ModelEntityLayer.pdb

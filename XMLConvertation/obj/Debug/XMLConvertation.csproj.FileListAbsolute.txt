@@ -1,0 +1,7 @@
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\XMLConvertation\bin\Debug\XMLConvertation.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\XMLConvertation\bin\Debug\XMLConvertation.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\XMLConvertation\bin\Debug\ModelEntityLayer.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\XMLConvertation\bin\Debug\ModelEntityLayer.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\XMLConvertation\obj\Debug\XMLConvertation.csprojResolveAssemblyReference.cache
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\XMLConvertation\obj\Debug\XMLConvertation.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\XMLConvertation\obj\Debug\XMLConvertation.pdb

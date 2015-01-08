@@ -1,14 +1,14 @@
-﻿using MvcAutomation.Models;
+﻿using ModelEntityLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MvcAutomation.Systems
+namespace Systems
 {
-    public static class GradeSystem
+    public class GradeSystem : IGradeSystem
     {
-        public static double GradeTest(NewTestViewModel user_answer, NewTestViewModel right_answer)
+        public double GradeTest(NewTestEntityModel user_answer, NewTestEntityModel right_answer)
         {
             int same = 0;
             int right_val = 0;

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using DAL.Concrete;
 using BLL.Interface.Services;
 using BLL.Services;
+using XMLConvertation;
+using Systems;
 
 namespace DependencyResolver
 {
@@ -44,6 +46,9 @@ namespace DependencyResolver
             Bind<ISpecialityService>().To<SpecialityService>();
             Bind<ITestService>().To<TestService>();
             Bind<IUserService>().To<UserService>();
+
+            Bind<ITestConvert>().To<XmlConverter>();
+            Bind<IGradeSystem>().To<GradeSystem>();
         }
     }
 }

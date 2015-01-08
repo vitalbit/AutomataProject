@@ -1,0 +1,7 @@
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Systems\obj\Debug\Systems.csprojResolveAssemblyReference.cache
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Systems\bin\Debug\Systems.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Systems\bin\Debug\Systems.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Systems\bin\Debug\ModelEntityLayer.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Systems\bin\Debug\ModelEntityLayer.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Systems\obj\Debug\Systems.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Systems\obj\Debug\Systems.pdb

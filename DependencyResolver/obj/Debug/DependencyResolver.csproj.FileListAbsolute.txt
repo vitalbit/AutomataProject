@@ -20,3 +20,9 @@ C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\De
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\bin\Debug\Ninject.xml
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\obj\Debug\DependencyResolver.dll
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\obj\Debug\DependencyResolver.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\bin\Debug\Systems.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\bin\Debug\XMLConvertation.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\bin\Debug\ModelEntityLayer.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\bin\Debug\Systems.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\bin\Debug\XMLConvertation.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\DependencyResolver\bin\Debug\ModelEntityLayer.pdb

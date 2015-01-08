@@ -77,6 +77,14 @@
       <Project>{14cf7826-9beb-4115-b008-72266809866e}</Project>
       <Name>ORM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Systems\Systems.csproj">
+      <Project>{e68d1ea8-3208-49ea-b647-9a58aa727086}</Project>
+      <Name>Systems</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLConvertation\XMLConvertation.csproj">
+      <Project>{8bd410d7-5d66-4420-b644-97f83e8f5202}</Project>
+      <Name>XMLConvertation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

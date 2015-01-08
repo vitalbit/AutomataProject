@@ -1,13 +1,14 @@
 ﻿using BLL.Interface.Entities;
 using BLL.Interface.Services;
-using MvcAutomation.Convertation;
 using MvcAutomation.Models;
-using MvcAutomation.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Systems;
+using XMLConvertation;
+using MvcAutomation.Mappers;
 
 namespace MvcAutomation.Controllers
 {
@@ -21,10 +22,11 @@ namespace MvcAutomation.Controllers
         private readonly IUserService userService;
         private readonly IAnswerService answerService;
         private readonly ITestConvert converter;
+        private readonly IGradeSystem grade;
 
         public TestController(IBlockService service, IBlockTypeService service1,
             ITestService service2, IAttachmentContentService service3, IUserService service4,
-            IAnswerService service5) : base()
+            IAnswerService service5, ITestConvert converter, IGradeSystem grade)
         {
             blockService = service;
             blockTypeService = service1;
@@ -32,7 +34,8 @@ namespace MvcAutomation.Controllers
             contentService = service3;
             userService = service4;
             answerService = service5;
-            this.converter = new XmlConverter();
+            this.converter = converter;
+            this.grade = grade;
         }
 
         public ActionResult Index()
@@ -53,7 +56,7 @@ namespace MvcAutomation.Controllers
             TestEntity test = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
             List<AttachmentContentEntity> contents = testService.GetAttachmentContents(test).ToList();
             num = new Random().Next(contents.Count);
-            NewTestViewModel newTest = converter.getFromBytes(contents[num].Content);
+            NewTestViewModel newTest = converter.getFromBytes(contents[num].Content).ToView();
             if (Request.Cookies["time"] == null)
             {
                 Response.Cookies["time"].Value = (test.TestTime * 60).ToString();
@@ -115,13 +118,13 @@ namespace MvcAutomation.Controllers
                 };
                 if (Request.Cookies["time"] != null)
                     Response.Cookies["time"].Expires = DateTime.Now.AddSeconds(5);
-                AttachmentContentEntity content = new AttachmentContentEntity() { Content = converter.getFromNewTest(newTest) };
+                AttachmentContentEntity content = new AttachmentContentEntity() { Content = converter.getFromNewTest(newTest.ToEntity()) };
                 UserEntity user = userService.GetAllUserEntities().LastOrDefault(ent => ent.Nickname == User.Identity.Name);
                 TestEntity testEnt = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test.TestName);
 
                 List<AttachmentContentEntity> contents = testService.GetAttachmentContents(testEnt).ToList();
-                NewTestViewModel rightTest = converter.getFromBytes(contents[test.TestNum].Content);
-                double mark = GradeSystem.GradeTest(newTest, rightTest);
+                NewTestViewModel rightTest = converter.getFromBytes(contents[test.TestNum].Content).ToView();
+                double mark = grade.GradeTest(newTest.ToEntity(), rightTest.ToEntity());
 
                 content.FileName = User.Identity.Name + Guid.NewGuid().ToString();
                 contentService.CreateAttachmentContent(content);

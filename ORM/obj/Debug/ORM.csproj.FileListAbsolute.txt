@@ -7,4 +7,3 @@ C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\OR
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ORM\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ORM\obj\Debug\ORM.dll
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ORM\obj\Debug\ORM.pdb
-C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\ORM\obj\Debug\ORM.csprojResolveAssemblyReference.cache

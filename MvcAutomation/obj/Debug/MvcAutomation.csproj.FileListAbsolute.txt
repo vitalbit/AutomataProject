@@ -48,3 +48,9 @@ C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Mv
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\DAL.pdb
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\CaptchaLibrary.dll
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\CaptchaLibrary.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\ModelEntityLayer.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\Systems.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\XMLConvertation.dll
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\ModelEntityLayer.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\Systems.pdb
+C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\XMLConvertation.pdb
