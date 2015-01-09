@@ -11,6 +11,7 @@ using System.IO;
 using MvcAutomation.Providers;
 using XMLConvertation;
 using MvcAutomation.Mappers;
+using System.Text;
 
 namespace MvcAutomation.Controllers
 {
@@ -76,7 +77,7 @@ namespace MvcAutomation.Controllers
                     var user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == login);
                     if (user != null)
                     {
-                        Response.Cookies["user_name"].Value = user.FirstName;
+                        Response.Cookies["user_name"].Value = Convert.ToBase64String(Encoding.Default.GetBytes(user.FirstName));
                         Response.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);
                     }
                     return RedirectToAction("Index");

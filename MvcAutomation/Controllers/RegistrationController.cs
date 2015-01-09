@@ -76,7 +76,7 @@ namespace MvcAutomation.Controllers
                     var userEnt = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname);
                     if (userEnt != null)
                     {
-                        Response.Cookies["user_name"].Value = userEnt.FirstName;
+                        Response.Cookies["user_name"].Value = Convert.ToBase64String(Encoding.Default.GetBytes(userEnt.FirstName));
                         Response.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);
                     }
                     FormsAuthentication.SetAuthCookie(user.Nickname, true);
