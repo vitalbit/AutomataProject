@@ -23,7 +23,6 @@ namespace MvcAutomation.Controllers
         private readonly ICourseService courseService;
         private readonly IGroupService groupService;
         private readonly ISpecialityService specialityService;
-        private readonly IRoleService roleService;
         private readonly IBlockTypeService blockTypeService;
         private readonly IAnswerService answerService;
         private readonly ITestService testService;
@@ -32,7 +31,7 @@ namespace MvcAutomation.Controllers
 
         public HomeController(IBlockService service1, IUserService service2,
             IFacultyService service3, ICourseService service4, IGroupService service5,
-            ISpecialityService service6, IRoleService service7, IBlockTypeService service8,
+            ISpecialityService service6, IBlockTypeService service8,
             IAnswerService service9, ITestService service10, IAttachmentContentService service11,
             ITestConvert convert)
         {
@@ -42,7 +41,6 @@ namespace MvcAutomation.Controllers
             courseService = service4;
             groupService = service5;
             specialityService = service6;
-            roleService = service7;
             blockTypeService = service8;
             answerService = service9;
             testService = service10;

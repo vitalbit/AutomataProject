@@ -11,24 +11,32 @@
             using (Html.BeginForm("CheckAnswer", "Check", FormMethod.Get))
             {
                 <div>
-                    <input type="hidden" name="test_id" value="@answer.TestId" />
-                    <input type="hidden" name="content_id" value="@answer.AttachmentContentId" />
-                    @Html.Label(answer.FirstName + " " + answer.LastName)
-                    <br />
-                    @Html.Label("Факультет: " + answer.Faculty)
-                    <br />
-                    @Html.Label("Курс: " + answer.Course)
-                    <br />
-                    @Html.Label("Специальность: " + answer.Speciality)
-                    <br />
-                    @Html.Label("Группа: " + answer.Group)
-                    <br />
-                    @Html.Label("Оценка: " + answer.Mark)
-                    <br />
-                    <input type="submit" value="Просмотреть" />
+                    <fieldset>
+                        <legend>@answer.TestName</legend>
+                        <input type="hidden" name="test_name" value="@answer.TestName" />
+                        <input type="hidden" name="content_id" value="@answer.AttachmentContentId" />
+                        @Html.Label(answer.FirstName + " " + answer.LastName)
+                        <br />
+                        @Html.Label("Факультет: " + answer.Faculty)
+                        <br />
+                        @Html.Label("Курс: " + answer.Course)
+                        <br />
+                        @Html.Label("Специальность: " + answer.Speciality)
+                        <br />
+                        @Html.Label("Группа: " + answer.Group)
+                        <br />
+                        @Html.Label("Оценка: " + answer.Mark)
+                        <br />
+                        <input type="submit" value="Просмотреть" />
+                    </fieldset>
                 </div>
             <br />
             }
+        }
+        @using (Html.BeginForm("ListAnswers", "Check", FormMethod.Post))
+        {
+            <input type="hidden" name="page" value="@Model[0].Page" />
+            <input type="submit" value="Далее" />
         }
     </div>
 </div>

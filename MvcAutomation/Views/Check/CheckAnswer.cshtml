@@ -9,14 +9,12 @@
         @Html.HiddenFor(model => model.Values)
         @Html.HiddenFor(model => model.States)
         <div class="editor-field">
-            <label>Имя задания</label>
-            <br />
-            @Html.TextBoxFor(model => model.TestName, new { style = "width: 100px" })
+            <h3>@Model.TestName</h3>
         </div>
+        <br />
         <div class="editor-field">
-            <label>Регулярное выражение</label>
-            <br />
-            @Html.TextBoxFor(model => model.Regex, new { style = "width: 100px" })
+            <label>Регулярное выражение :</label>
+            @Model.Regex
         </div>
         <br />
         <div class="editor-field">
