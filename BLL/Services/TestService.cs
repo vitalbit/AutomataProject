@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class TestService : ITestService
     {
         private readonly IUnitOfWork uow;
-        private readonly ITestRepository testRepository;
+        private readonly IRepository<DalTest> testRepository;
 
-        public TestService(IUnitOfWork uow, ITestRepository repository)
+        public TestService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.testRepository = repository;
+            this.testRepository = uow.TestRepository;
         }
 
         public IEnumerable<TestEntity> GetAllTestEntities()
@@ -35,13 +36,23 @@ namespace BLL.Services
 
         public void SetAttachmentContent(TestEntity test, IEnumerable<AttachmentContentEntity> contents)
         {
-            testRepository.SetAttachmentContent(test.ToDalTest(), contents.Select(ent => ent.ToDalAttachmentContent()));
+            DalTest dalTest = testRepository.GetById(test.Id);
+            foreach (var content in contents)
+                dalTest.AttachmentContents.Add(content.ToDalAttachmentContent());
+            testRepository.Update(dalTest);
+            uow.Commit();
         }
 
 
         public IEnumerable<AttachmentContentEntity> GetAttachmentContents(TestEntity test)
         {
-            return testRepository.GetAttachmentContents(test.ToDalTest()).Select(ent => ent.ToBllAttachmentContent());
+            DalTest dalTest = testRepository.GetById(test.Id);
+            return dalTest.AttachmentContents.Select(ent => ent.ToBllAttachmentContent());
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

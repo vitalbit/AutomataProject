@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface ITestService
+    public interface ITestService : IDisposable
     {
         IEnumerable<TestEntity> GetAllTestEntities();
         void CreateTest(TestEntity test);

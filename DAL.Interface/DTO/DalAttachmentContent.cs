@@ -11,5 +11,8 @@ namespace DAL.Interface.DTO
         public int Id { get; set; }
         public string FileName { get; set; }
         public byte[] Content { get; set; }
+        public DalAnswer Answer { get; set; }
+        public IEnumerable<DalTest> Tests { get; set; }
+        public IEnumerable<DalBlock> Blocks { get; set; }
     }
 }

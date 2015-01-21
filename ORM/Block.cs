@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ORM
 {
-    public class Block
+    public class Block : IORMEntity
     {
-        public int BlockId { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
         public int? BlockTypeId { get; set; }

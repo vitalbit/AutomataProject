@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface IFacultyService
+    public interface IFacultyService : IDisposable
     {
         IEnumerable<FacultyEntity> GetAllFacultyEntities();
         void CreateFaculty(FacultyEntity faculty);

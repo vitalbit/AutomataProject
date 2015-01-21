@@ -10,11 +10,68 @@ namespace DAL.Mappers
 {
     public static class DalOrmMapper
     {
+        #region Mappers
+        public static IDalEntity ToDal(this IORMEntity entity)
+        {
+            if (entity is Answer)
+                return (entity as Answer).ToDalAnswer();
+            else if (entity is AttachmentContent)
+                return (entity as AttachmentContent).ToDalAttachmentContent();
+            else if (entity is Block)
+                return (entity as Block).ToDalBlock();
+            else if (entity is BlockType)
+                return (entity as BlockType).ToDalBlockType();
+            else if (entity is Course)
+                return (entity as Course).ToDalCourse();
+            else if (entity is Faculty)
+                return (entity as Faculty).ToDalFaculty();
+            else if (entity is Group)
+                return (entity as Group).ToDalGroup();
+            else if (entity is Role)
+                return (entity as Role).ToDalRole();
+            else if (entity is Speciality)
+                return (entity as Speciality).ToDalSpeciality();
+            else if (entity is Test)
+                return (entity as Test).ToDalTest();
+            else if (entity is User)
+                return (entity as User).ToDalUser();
+            else
+                return null;
+        }
+
+        public static IORMEntity ToOrm(this IDalEntity entity)
+        {
+            if (entity is DalAnswer)
+                return (entity as DalAnswer).ToOrmAnswer();
+            else if (entity is DalAttachmentContent)
+                return (entity as DalAttachmentContent).ToOrmAttachmentContent();
+            else if (entity is DalBlock)
+                return (entity as DalBlock).ToOrmBlock();
+            else if (entity is DalBlockType)
+                return (entity as DalBlockType).ToOrmBlockType();
+            else if (entity is DalCourse)
+                return (entity as DalCourse).ToOrmCourse();
+            else if (entity is DalFaculty)
+                return (entity as DalFaculty).ToOrmFaculty();
+            else if (entity is DalGroup)
+                return (entity as DalGroup).ToOrmGroup();
+            else if (entity is DalRole)
+                return (entity as DalRole).ToOrmRole();
+            else if (entity is DalSpeciality)
+                return (entity as DalSpeciality).ToOrmSpeciality();
+            else if (entity is DalTest)
+                return (entity as DalTest).ToOrmTest();
+            else if (entity is DalUser)
+                return (entity as DalUser).ToOrmUser();
+            else
+                return null;
+        }
+
         public static DalUser ToDalUser(this User user)
         {
             return new DalUser()
             {
-                Id = user.UserId,
+                Id = user.Id,
                 Nickname = user.Nickname,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -32,7 +89,7 @@ namespace DAL.Mappers
         {
             return new User()
             {
-                UserId = user.Id,
+                Id = user.Id,
                 Nickname = user.Nickname,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -50,7 +107,7 @@ namespace DAL.Mappers
         {
             return new DalAnswer()
             {
-                Id = answer.AttachmentContentId,
+                Id = answer.Id,
                 TestId = answer.TestId,
                 UserId = answer.UserId,
                 Mark = answer.Mark
@@ -61,7 +118,7 @@ namespace DAL.Mappers
         {
             return new Answer()
             {
-                AttachmentContentId = answer.Id,
+                Id = answer.Id,
                 TestId = answer.TestId,
                 UserId = answer.UserId,
                 Mark = answer.Mark
@@ -72,9 +129,12 @@ namespace DAL.Mappers
         {
             return new DalAttachmentContent()
             {
-                Id = content.AttachmentContentId,
+                Id = content.Id,
                 FileName = content.FileName,
-                Content = content.Content
+                Content = content.Content,
+                Answer = content.Answer != null ? content.Answer.ToDalAnswer() : null,
+                Blocks = content.Blocks != null ? content.Blocks.Select(ent => ent.ToDalBlock()) : null,
+                Tests = content.Tests != null ? content.Tests.Select(ent => ent.ToDalTest()) : null
             };
         }
 
@@ -82,9 +142,12 @@ namespace DAL.Mappers
         {
             return new AttachmentContent()
             {
-                AttachmentContentId = content.Id,
+                Id = content.Id,
                 FileName = content.FileName,
-                Content = content.Content
+                Content = content.Content,
+                Answer = content.Answer != null ? content.Answer.ToOrmAnswer() : null,
+                Blocks = content.Blocks != null ? content.Blocks.Select(ent => ent.ToOrmBlock()).ToList() : null,
+                Tests = content.Tests != null ? content.Tests.Select(ent => ent.ToOrmTest()).ToList() : null
             };
         }
 
@@ -92,7 +155,7 @@ namespace DAL.Mappers
         {
             return new DalBlock()
             {
-                Id = block.BlockId,
+                Id = block.Id,
                 Title = block.Title,
                 Text = block.Text,
                 BlockTypeId = block.BlockTypeId
@@ -103,7 +166,7 @@ namespace DAL.Mappers
         {
             return new Block()
             {
-                BlockId = block.Id,
+                Id = block.Id,
                 Title = block.Title,
                 Text = block.Text,
                 BlockTypeId = block.BlockTypeId
@@ -114,7 +177,7 @@ namespace DAL.Mappers
         {
             return new DalBlockType()
             {
-                Id = blockType.BlockTypeId,
+                Id = blockType.Id,
                 Name = blockType.Name
             };
         }
@@ -123,7 +186,7 @@ namespace DAL.Mappers
         {
             return new BlockType()
             {
-                BlockTypeId = blockType.Id,
+                Id = blockType.Id,
                 Name = blockType.Name
             };
         }
@@ -132,7 +195,7 @@ namespace DAL.Mappers
         {
             return new DalCourse()
             {
-                Id = course.CourseId,
+                Id = course.Id,
                 Number = course.Number
             };
         }
@@ -141,7 +204,7 @@ namespace DAL.Mappers
         {
             return new Course()
             {
-                CourseId = course.Id,
+                Id = course.Id,
                 Number = course.Number
             };
         }
@@ -150,7 +213,7 @@ namespace DAL.Mappers
         {
             return new DalFaculty()
             {
-                Id = faculty.FacultyId,
+                Id = faculty.Id,
                 Name = faculty.Name
             };
         }
@@ -159,7 +222,7 @@ namespace DAL.Mappers
         {
             return new Faculty()
             {
-                FacultyId = faculty.Id,
+                Id = faculty.Id,
                 Name = faculty.Name
             };
         }
@@ -168,7 +231,7 @@ namespace DAL.Mappers
         {
             return new DalGroup()
             {
-                Id = group.GroupId,
+                Id = group.Id,
                 Name = group.Name
             };
         }
@@ -177,7 +240,7 @@ namespace DAL.Mappers
         {
             return new Group()
             {
-                GroupId = group.Id,
+                Id = group.Id,
                 Name = group.Name
             };
         }
@@ -186,7 +249,7 @@ namespace DAL.Mappers
         {
             return new DalRole()
             {
-                Id = role.RoleId,
+                Id = role.Id,
                 Name = role.Name
             };
         }
@@ -195,7 +258,7 @@ namespace DAL.Mappers
         {
             return new Role()
             {
-                RoleId = role.Id,
+                Id = role.Id,
                 Name = role.Name
             };
         }
@@ -204,7 +267,7 @@ namespace DAL.Mappers
         {
             return new DalSpeciality()
             {
-                Id = speciality.SpecialityId,
+                Id = speciality.Id,
                 Name = speciality.Name
             };
         }
@@ -213,7 +276,7 @@ namespace DAL.Mappers
         {
             return new Speciality()
             {
-                SpecialityId = speciality.Id,
+                Id = speciality.Id,
                 Name = speciality.Name
             };
         }
@@ -222,10 +285,12 @@ namespace DAL.Mappers
         {
             return new DalTest()
             {
-                Id = test.TestId,
+                Id = test.Id,
                 Name = test.Name,
                 TestCount = test.TestCount,
-                TestTime = test.TestTime
+                TestTime = test.TestTime,
+                Answers = test.Answers != null ? test.Answers.Select(ent => ent.ToDalAnswer()).ToList() : null,
+                AttachmentContents = test.AttachmentContents != null ? test.AttachmentContents.Select(ent => ent.ToDalAttachmentContent()).ToList() : null
             };
         }
 
@@ -233,11 +298,47 @@ namespace DAL.Mappers
         {
             return new Test()
             {
-                TestId = test.Id,
+                Id = test.Id,
                 Name = test.Name,
                 TestCount = test.TestCount,
-                TestTime = test.TestTime
+                TestTime = test.TestTime,
+                Answers = test.Answers != null ? test.Answers.Select(ent => ent.ToOrmAnswer()).ToList() : null,
+                AttachmentContents = test.AttachmentContents != null ? test.AttachmentContents.Select(ent => ent.ToOrmAttachmentContent()).ToList() : null
             };
         }
+        #endregion
+        #region Copy
+
+        public static void CopyToOrm(this IDalEntity dal, IORMEntity orm)
+        {
+            if (dal is DalUser && orm is User)
+                (dal as DalUser).CopyToOrmUser((User)orm);
+            else if (dal is DalTest && orm is Test)
+                (dal as DalTest).CopyToOrmTest((Test)orm);
+        }
+
+        public static void CopyToOrmUser(this DalUser dalUser, User ormUser)
+        {
+            ormUser.CourseId = dalUser.CourseId;
+            ormUser.Email = dalUser.Email;
+            ormUser.FacultyId = dalUser.FacultyId;
+            ormUser.FirstName = dalUser.FirstName;
+            ormUser.GroupId = dalUser.GroupId;
+            ormUser.LastName = dalUser.LastName;
+            ormUser.Nickname = dalUser.Nickname;
+            ormUser.Password = dalUser.Password;
+            ormUser.RoleId = dalUser.RoleId;
+            ormUser.SpecialityId = dalUser.SpecialityId;
+        }
+
+        public static void CopyToOrmTest(this DalTest dalTest, Test ormTest)
+        {
+            ormTest.Answers = dalTest.Answers.Select(ent => ent.ToOrmAnswer()).ToList();
+            ormTest.AttachmentContents = dalTest.AttachmentContents.Select(ent => ent.ToOrmAttachmentContent()).ToList();
+            ormTest.Name = dalTest.Name;
+            ormTest.TestCount = dalTest.TestCount;
+            ormTest.TestTime = dalTest.TestTime;
+        }
+        #endregion
     }
 }

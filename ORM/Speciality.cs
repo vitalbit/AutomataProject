@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ORM
 {
-    public class Speciality
+    public class Speciality : IORMEntity
     {
-        public int SpecialityId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public Speciality()

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ORM
 {
-    public class User
+    public class User : IORMEntity
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string Nickname { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

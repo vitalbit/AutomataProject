@@ -99,5 +99,17 @@ namespace MvcAutomation.Controllers
             test.TestName = test_name;
             return View(test);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            answerService.Dispose();
+            userService.Dispose();
+            courseService.Dispose();
+            facultyService.Dispose();
+            groupService.Dispose();
+            specialityService.Dispose();
+            contentService.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

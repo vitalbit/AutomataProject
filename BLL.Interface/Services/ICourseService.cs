@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface ICourseService
+    public interface ICourseService : IDisposable
     {
         IEnumerable<CourseEntity> GetAllCourseEntities();
         void CreateCourse(CourseEntity course);

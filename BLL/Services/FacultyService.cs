@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class FacultyService : IFacultyService
     {
         private readonly IUnitOfWork uow;
-        private readonly IFacultyRepository facultyRepository;
+        private readonly IRepository<DalFaculty> facultyRepository;
 
-        public FacultyService(IUnitOfWork uow, IFacultyRepository repository)
+        public FacultyService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.facultyRepository = repository;
+            this.facultyRepository = uow.FacultyRepository;
         }
 
         public IEnumerable<FacultyEntity> GetAllFacultyEntities()
@@ -30,6 +31,11 @@ namespace BLL.Services
         {
             facultyRepository.Create(faculty.ToDalFaculty());
             uow.Commit();
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

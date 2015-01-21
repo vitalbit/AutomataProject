@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class RoleService : IRoleService
     {
         private readonly IUnitOfWork uow;
-        private readonly IRoleRepository roleRepository;
+        private readonly IRepository<DalRole> roleRepository;
 
-        public RoleService(IUnitOfWork uow, IRoleRepository repository)
+        public RoleService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.roleRepository = repository;
+            this.roleRepository = uow.RoleRepository;
         }
 
         public IEnumerable<RoleEntity> GetAllRoleEntities()
@@ -30,6 +31,11 @@ namespace BLL.Services
         {
             roleRepository.Create(role.ToDalRole());
             uow.Commit();
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

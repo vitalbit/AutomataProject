@@ -46,18 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concrete\AnswerRepository.cs" />
-    <Compile Include="Concrete\AttachmentContentRepository.cs" />
-    <Compile Include="Concrete\BlockRepository.cs" />
-    <Compile Include="Concrete\BlockTypeRepository.cs" />
-    <Compile Include="Concrete\CourseRepository.cs" />
-    <Compile Include="Concrete\FacultyRepository.cs" />
-    <Compile Include="Concrete\GroupRepository.cs" />
-    <Compile Include="Concrete\RoleRepository.cs" />
-    <Compile Include="Concrete\SpecialityRepository.cs" />
-    <Compile Include="Concrete\TestRepository.cs" />
+    <Compile Include="Concrete\GenericRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
-    <Compile Include="Concrete\UserRepository.cs" />
     <Compile Include="Mappers\DalOrmMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,5 +12,7 @@ namespace DAL.Interface.DTO
         public string Name { get; set; }
         public int? TestCount { get; set; }
         public int? TestTime { get; set; }
+        public ICollection<DalAnswer> Answers { get; set; }
+        public ICollection<DalAttachmentContent> AttachmentContents { get; set; }
     }
 }

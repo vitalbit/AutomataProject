@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class AttachmentContentService : IAttachmentContentService
     {
         private readonly IUnitOfWork uow;
-        private readonly IAttachmentContentRepository contentRepository;
+        private readonly IRepository<DalAttachmentContent> contentRepository;
 
-        public AttachmentContentService(IUnitOfWork uow, IAttachmentContentRepository repository)
+        public AttachmentContentService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.contentRepository = repository;        
+            this.contentRepository = uow.ContentRepository;        
         }
 
         public IEnumerable<AttachmentContentEntity> GetAllAttachmentContentEntities()
@@ -35,12 +36,17 @@ namespace BLL.Services
 
         public IEnumerable<AttachmentContentEntity> GetTestAttachmentContentEntities()
         {
-            return contentRepository.GetAllTestFiles().Select(ent => ent.ToBllAttachmentContent());
+            return contentRepository.GetAll().Where(ent => ent.Answer == null && ent.Blocks.Count() == 0).Select(ent => ent.ToBllAttachmentContent());
         }
 
         public IEnumerable<AttachmentContentEntity> GetAnswerAttachmentContentEntities()
         {
-            return contentRepository.GetAllAnswerFiles().Select(ent => ent.ToBllAttachmentContent());
+            return contentRepository.GetAll().Where(ent => ent.Answer != null).Select(ent => ent.ToBllAttachmentContent());
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface IBlockTypeService
+    public interface IBlockTypeService : IDisposable
     {
         IEnumerable<BlockTypeEntity> GetAllBlockTypeEntities();
         void CreateBlockType(BlockTypeEntity blockType);

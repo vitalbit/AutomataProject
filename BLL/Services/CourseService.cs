@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class CourseService : ICourseService
     {
         private readonly IUnitOfWork uow;
-        private readonly ICourseRepository courseRepository;
+        private readonly IRepository<DalCourse> courseRepository;
 
-        public CourseService(IUnitOfWork uow, ICourseRepository repository)
+        public CourseService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.courseRepository = repository;
+            this.courseRepository = uow.CourseRepository;
         }
 
         public IEnumerable<CourseEntity> GetAllCourseEntities()
@@ -30,6 +31,11 @@ namespace BLL.Services
         {
             courseRepository.Create(course.ToDalCourse());
             uow.Commit();
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

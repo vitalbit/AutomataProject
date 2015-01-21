@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface IRoleService
+    public interface IRoleService : IDisposable
     {
         IEnumerable<RoleEntity> GetAllRoleEntities();
         void CreateRole(RoleEntity role);

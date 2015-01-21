@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface IAnswerService
+    public interface IAnswerService : IDisposable
     {
         IEnumerable<AnswerEntity> GetAllAnswerEntities();
         void CreateAnswer(AnswerEntity answer);

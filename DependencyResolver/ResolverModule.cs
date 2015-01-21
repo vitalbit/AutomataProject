@@ -12,6 +12,7 @@ using BLL.Interface.Services;
 using BLL.Services;
 using XMLConvertation;
 using Systems;
+using DAL.Interface.DTO;
 
 namespace DependencyResolver
 {
@@ -19,19 +20,7 @@ namespace DependencyResolver
     {
         public override void Load()
         {
-            Bind<DbContext>().To<EntityModel>().InSingletonScope();
-
-            Bind<IAnswerRepository>().To<AnswerRepository>();
-            Bind<IAttachmentContentRepository>().To<AttachmentContentRepository>();
-            Bind<IBlockRepository>().To<BlockRepository>();
-            Bind<IBlockTypeRepository>().To<BlockTypeRepository>();
-            Bind<ICourseRepository>().To<CourseRepository>();
-            Bind<IFacultyRepository>().To<FacultyRepository>();
-            Bind<IGroupRepository>().To<GroupRepository>();
-            Bind<IRoleRepository>().To<RoleRepository>();
-            Bind<ISpecialityRepository>().To<SpecialityRepository>();
-            Bind<ITestRepository>().To<TestRepository>();
-            Bind<IUserRepository>().To<UserRepository>();
+            Bind<DbContext>().To<EntityModel>();
 
             Bind<IUnitOfWork>().To<UnitOfWork>();
 

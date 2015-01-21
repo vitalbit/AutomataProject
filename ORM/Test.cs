@@ -7,9 +7,9 @@ using System.Text;
 
 namespace ORM
 {
-    public class Test
+    public class Test : IORMEntity
     {
-        public int TestId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int? TestCount { get; set; }
         public int? TestTime { get; set; }

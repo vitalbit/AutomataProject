@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class UserService : IUserService
     {
         private readonly IUnitOfWork uow;
-        private readonly IUserRepository userRepository;
+        private readonly IRepository<DalUser> userRepository;
 
-        public UserService(IUnitOfWork uow, IUserRepository repository)
+        public UserService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.userRepository = repository;
+            this.userRepository = uow.UserRepository;
         }
 
         public IEnumerable<UserEntity> GetAllUserEntities()
@@ -36,6 +37,11 @@ namespace BLL.Services
         {
             userRepository.Update(user.ToDalUser());
             uow.Commit();
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

@@ -34,5 +34,11 @@ namespace MvcAutomation.Controllers
                 }));
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            blockService.Dispose();
+            blockTypeService.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

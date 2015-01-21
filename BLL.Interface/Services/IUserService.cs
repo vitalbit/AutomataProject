@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface IUserService
+    public interface IUserService : IDisposable
     {
         IEnumerable<UserEntity> GetAllUserEntities();
         void CreateUser(UserEntity user);

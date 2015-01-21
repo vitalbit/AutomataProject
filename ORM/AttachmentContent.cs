@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ORM
 {
-    public class AttachmentContent
+    public class AttachmentContent : IORMEntity
     {
-        public int AttachmentContentId { get; set; }
+        public int Id { get; set; }
         public string FileName { get; set; }
         public byte[] Content { get; set; }
         public virtual Answer Answer { get; set; }

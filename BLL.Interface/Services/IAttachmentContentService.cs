@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface IAttachmentContentService
+    public interface IAttachmentContentService : IDisposable
     {
         IEnumerable<AttachmentContentEntity> GetAllAttachmentContentEntities();
         void CreateAttachmentContent(AttachmentContentEntity content);

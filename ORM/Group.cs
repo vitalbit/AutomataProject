@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ORM
 {
-    public class Group
+    public class Group : IORMEntity
     {
-        public int GroupId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public Group()

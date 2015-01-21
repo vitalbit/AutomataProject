@@ -138,5 +138,16 @@ namespace MvcAutomation.Controllers
             bool result = Membership.FindUsersByName(nickName).Count == 0;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            userService.Dispose();
+            roleService.Dispose();
+            facultyService.Dispose();
+            specialityService.Dispose();
+            courseService.Dispose();
+            groupService.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

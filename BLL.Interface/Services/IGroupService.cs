@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interface.Services
 {
-    public interface IGroupService
+    public interface IGroupService : IDisposable
     {
         IEnumerable<GroupEntity> GetAllGroupEntities();
         void CreateGroup(GroupEntity group);

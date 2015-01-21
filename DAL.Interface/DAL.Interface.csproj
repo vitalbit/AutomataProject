@@ -59,19 +59,8 @@
     <Compile Include="DTO\DalUser.cs" />
     <Compile Include="DTO\IDalEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IAnswerRepository.cs" />
-    <Compile Include="Repository\IAttachmentContentRepository.cs" />
-    <Compile Include="Repository\IBlockRepository.cs" />
-    <Compile Include="Repository\IBlockTypeRepository.cs" />
-    <Compile Include="Repository\ICourseRepository.cs" />
-    <Compile Include="Repository\IFacultyRepository.cs" />
-    <Compile Include="Repository\IGroupRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\IRoleRepository.cs" />
-    <Compile Include="Repository\ISpecialityRepository.cs" />
-    <Compile Include="Repository\ITestRepository.cs" />
     <Compile Include="Repository\IUnitOfWork.cs" />
-    <Compile Include="Repository\IUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

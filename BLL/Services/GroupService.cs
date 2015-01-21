@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class GroupService : IGroupService
     {
         private readonly IUnitOfWork uow;
-        private readonly IGroupRepository groupRepository;
+        private readonly IRepository<DalGroup> groupRepository;
 
-        public GroupService(IUnitOfWork uow, IGroupRepository repository)
+        public GroupService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.groupRepository = repository;
+            this.groupRepository = uow.GroupRepository;
         }
 
         public IEnumerable<GroupEntity> GetAllGroupEntities()
@@ -30,6 +31,11 @@ namespace BLL.Services
         {
             groupRepository.Create(group.ToDalGroup());
             uow.Commit();
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

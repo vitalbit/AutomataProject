@@ -7,10 +7,10 @@ using System.Text;
 
 namespace ORM
 {
-    public class Answer
+    public class Answer : IORMEntity
     {
         [Key, ForeignKey("AttachmentContent")]
-        public int AttachmentContentId { get; set; }
+        public int Id { get; set; }
         public int? TestId { get; set; }
         public int? UserId { get; set; }
         public double? Mark { get; set; }

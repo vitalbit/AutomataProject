@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class AnswerService : IAnswerService
     {
         private readonly IUnitOfWork uow;
-        private readonly IAnswerRepository answerRepository;
+        private readonly IRepository<DalAnswer> answerRepository;
 
-        public AnswerService(IUnitOfWork uow, IAnswerRepository repository)
+        public AnswerService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.answerRepository = repository;        
+            this.answerRepository = uow.AnswerRepository;
         }
 
         public IEnumerable<AnswerEntity> GetAllAnswerEntities()
@@ -30,6 +31,11 @@ namespace BLL.Services
         {
             answerRepository.Create(answer.ToDalAnswer());
             uow.Commit();
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }

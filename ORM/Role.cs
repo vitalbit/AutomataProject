@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ORM
 {
-    public class Role
+    public class Role : IORMEntity
     {
-        public int RoleId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public Role()

@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interface.Repository;
+using DAL.Interface.DTO;
 
 namespace BLL.Services
 {
     public class BlockService : IBlockService
     {
         private readonly IUnitOfWork uow;
-        private readonly IBlockRepository blockRepository;
+        private readonly IRepository<DalBlock> blockRepository;
 
-        public BlockService(IUnitOfWork uow, IBlockRepository repository)
+        public BlockService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.blockRepository = repository;        
+            this.blockRepository = uow.BlockRepository;
         }
 
         public IEnumerable<BlockEntity> GetAllBlockEntities()
@@ -32,10 +33,14 @@ namespace BLL.Services
             uow.Commit();
         }
 
-
         public IEnumerable<BlockEntity> GetHomeBlocksEntities()
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            uow.Dispose();
         }
     }
 }
