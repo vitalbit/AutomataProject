@@ -53,7 +53,7 @@ namespace DAL.Concrete
         public void Update(TEntity e)
         {
             TOrm entity = context.Set<TOrm>().FirstOrDefault(answ => answ.Id == e.Id);
-            e.CopyToOrm(entity);
+            e.CopyToOrm(entity, context);
             context.Set<TOrm>().Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
         }

@@ -1,7 +1,9 @@
-﻿using DAL.Interface.DTO;
+﻿using DAL.Concrete;
+using DAL.Interface.DTO;
 using ORM;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -133,8 +135,8 @@ namespace DAL.Mappers
                 FileName = content.FileName,
                 Content = content.Content,
                 Answer = content.Answer != null ? content.Answer.ToDalAnswer() : null,
-                Blocks = content.Blocks != null ? content.Blocks.Select(ent => ent.ToDalBlock()) : null,
-                Tests = content.Tests != null ? content.Tests.Select(ent => ent.ToDalTest()) : null
+                Blocks = content.Blocks != null ? content.Blocks.Select(ent => ent.ToDalBlock()) : new List<DalBlock>(),
+                Tests = content.Tests != null ? content.Tests.Select(ent => ent.ToDalTest()) : new List<DalTest>()
             };
         }
 
@@ -146,8 +148,8 @@ namespace DAL.Mappers
                 FileName = content.FileName,
                 Content = content.Content,
                 Answer = content.Answer != null ? content.Answer.ToOrmAnswer() : null,
-                Blocks = content.Blocks != null ? content.Blocks.Select(ent => ent.ToOrmBlock()).ToList() : null,
-                Tests = content.Tests != null ? content.Tests.Select(ent => ent.ToOrmTest()).ToList() : null
+                Blocks = content.Blocks != null ? content.Blocks.Select(ent => ent.ToOrmBlock()).ToList() : new List<Block>(),
+                Tests = content.Tests != null ? content.Tests.Select(ent => ent.ToOrmTest()).ToList() : new List<Test>()
             };
         }
 
@@ -289,8 +291,8 @@ namespace DAL.Mappers
                 Name = test.Name,
                 TestCount = test.TestCount,
                 TestTime = test.TestTime,
-                Answers = test.Answers != null ? test.Answers.Select(ent => ent.ToDalAnswer()).ToList() : null,
-                AttachmentContents = test.AttachmentContents != null ? test.AttachmentContents.Select(ent => ent.ToDalAttachmentContent()).ToList() : null
+                Answers = test.Answers != null ? test.Answers.Select(ent => ent.ToDalAnswer()).ToList() : new List<DalAnswer>(),
+                AttachmentContents = test.AttachmentContents != null ? test.AttachmentContents.Select(ent => ent.ToDalAttachmentContent()).ToList() : new List<DalAttachmentContent>()
             };
         }
 
@@ -302,22 +304,22 @@ namespace DAL.Mappers
                 Name = test.Name,
                 TestCount = test.TestCount,
                 TestTime = test.TestTime,
-                Answers = test.Answers != null ? test.Answers.Select(ent => ent.ToOrmAnswer()).ToList() : null,
-                AttachmentContents = test.AttachmentContents != null ? test.AttachmentContents.Select(ent => ent.ToOrmAttachmentContent()).ToList() : null
+                Answers = test.Answers != null ? test.Answers.Select(ent => ent.ToOrmAnswer()).ToList() : new List<Answer>(),
+                AttachmentContents = test.AttachmentContents != null ? test.AttachmentContents.Select(ent => ent.ToOrmAttachmentContent()).ToList() : new List<AttachmentContent>()
             };
         }
         #endregion
         #region Copy
 
-        public static void CopyToOrm(this IDalEntity dal, IORMEntity orm)
+        public static void CopyToOrm(this IDalEntity dal, IORMEntity orm, DbContext context)
         {
             if (dal is DalUser && orm is User)
-                (dal as DalUser).CopyToOrmUser((User)orm);
+                (dal as DalUser).CopyToOrmUser((User)orm, context);
             else if (dal is DalTest && orm is Test)
-                (dal as DalTest).CopyToOrmTest((Test)orm);
+                (dal as DalTest).CopyToOrmTest((Test)orm, context);
         }
 
-        public static void CopyToOrmUser(this DalUser dalUser, User ormUser)
+        public static void CopyToOrmUser(this DalUser dalUser, User ormUser, DbContext context)
         {
             ormUser.CourseId = dalUser.CourseId;
             ormUser.Email = dalUser.Email;
@@ -331,10 +333,29 @@ namespace DAL.Mappers
             ormUser.SpecialityId = dalUser.SpecialityId;
         }
 
-        public static void CopyToOrmTest(this DalTest dalTest, Test ormTest)
+        public static void CopyToOrmTest(this DalTest dalTest, Test ormTest, DbContext context)
         {
-            ormTest.Answers = dalTest.Answers.Select(ent => ent.ToOrmAnswer()).ToList();
-            ormTest.AttachmentContents = dalTest.AttachmentContents.Select(ent => ent.ToOrmAttachmentContent()).ToList();
+            List<Answer> answers = new List<Answer>();
+            foreach (var answer in dalTest.Answers)
+            {
+                Answer answ = context.Set<Answer>().FirstOrDefault(ent => ent.Id == answer.Id);
+                if (answ != null)
+                    answers.Add(answ);
+                else
+                    answers.Add(answer.ToOrmAnswer());
+            }
+            ormTest.Answers = answers;
+
+            List<AttachmentContent> contents = new List<AttachmentContent>();
+            foreach (var content in dalTest.AttachmentContents)
+            {
+                AttachmentContent cont = context.Set<AttachmentContent>().FirstOrDefault(ent => ent.Id == content.Id);
+                if (cont != null)
+                    contents.Add(cont);
+                else
+                    contents.Add(content.ToOrmAttachmentContent());
+            }
+            ormTest.AttachmentContents = contents;
             ormTest.Name = dalTest.Name;
             ormTest.TestCount = dalTest.TestCount;
             ormTest.TestTime = dalTest.TestTime;

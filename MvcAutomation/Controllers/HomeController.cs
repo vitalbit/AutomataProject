@@ -311,7 +311,6 @@ namespace MvcAutomation.Controllers
                 int idtype = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
                 blockService.CreateBlock(new BlockEntity() { Title = te.Name, Text = "", BlockTypeId = idtype });
                 Session["TestResult"] = "Тест создан";
-                return RedirectToAction("Index");
             }
             return RedirectToAction("AddTest");
         }
