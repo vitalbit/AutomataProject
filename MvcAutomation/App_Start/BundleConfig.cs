@@ -44,6 +44,10 @@ namespace MvcAutomation
                 "~/Scripts/jquery.countdown.js",
                 "~/Scripts/jquery.cookie.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/paging").Include(
+                "~/Scripts/jquery.pajinate.js"
+                ));
         }
     }
 }

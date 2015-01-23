@@ -4,14 +4,34 @@
     ViewBag.Title = "Материал для скачивания";
 }
 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/paging")
+
+<script>
+    $(document).ready(function () {
+        $('#page_container').pajinate();
+    });
+</script>
+
+
 <div id="content">
     <div class="right">
-        @foreach (MvcAutomation.Models.BlockViewModel block in Model)
-        {
-            <h2><a href="@Url.Content("~\\Material\\" + block.Title)" download="">@block.Title</a></h2>
-            <div class="articles">
-                @block.Text
+        <div id="page_container">
+            <div class="page_navigation"></div>
+            <div class="content">
+                @foreach (MvcAutomation.Models.BlockViewModel block in Model)
+                {
+                    <div>
+                        <br />
+                        <h2><a href="@Url.Content("~\\Material\\" + block.Title)" download="">@block.Title</a></h2>
+                        <div class="articles">
+                            @block.Text
+                        </div>
+                    </div>
+                }
             </div>
-        }
+            <br />
+            <div class="page_navigation"></div>
+        </div>
     </div>
 </div>

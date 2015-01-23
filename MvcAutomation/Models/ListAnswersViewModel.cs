@@ -8,7 +8,6 @@ namespace MvcAutomation.Models
     public class ListAnswersViewModel
     {
         public int AttachmentContentId { get; set; }
-        public int Page { get; set; }
         public string TestName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

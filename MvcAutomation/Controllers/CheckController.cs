@@ -13,7 +13,6 @@ namespace MvcAutomation.Controllers
 {
     public class CheckController : Controller
     {
-        private const int PerPage = 10;
         private readonly IAnswerService answerService;
         private readonly IUserService userService;
         private readonly ICourseService courseService;
@@ -44,46 +43,25 @@ namespace MvcAutomation.Controllers
         {
             IEnumerable<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse();
             List<ListAnswersViewModel> answerList = new List<ListAnswersViewModel>();
-            foreach (var answer in answers.Take(PerPage))
+            IEnumerable<UserEntity> users = userService.GetAllUserEntities();
+            IEnumerable<TestEntity> tests = testService.GetAllTestEntities();
+            IEnumerable<CourseEntity> courses = courseService.GetAllCourseEntities();
+            IEnumerable<FacultyEntity> faculties = facultyService.GetAllFacultyEntities();
+            IEnumerable<GroupEntity> groups = groupService.GetAllGroupEntities();
+            IEnumerable<SpecialityEntity> specialities = specialityService.GetAllSpecialityEntities();
+            foreach (var answer in answers)
             {
-                UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Id == answer.UserId);
+                UserEntity user = users.FirstOrDefault(ent => ent.Id == answer.UserId);
                 answerList.Add(new ListAnswersViewModel()
                 {
-                    Page = 0,
                     AttachmentContentId = answer.Id,
-                    TestName = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Id == answer.TestId).Name,
+                    TestName = tests.FirstOrDefault(ent => ent.Id == answer.TestId).Name,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Course = courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Id == user.CourseId).Number,
-                    Faculty = facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Id == user.FacultyId).Name,
-                    Group = groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Id == user.GroupId).Name,
-                    Speciality = specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Id == user.SpecialityId).Name,
-                    Mark = answer.Mark
-                });
-            }
-            return View(answerList);
-        }
-
-        [HttpPost]
-        public ActionResult ListAnswers(int page)
-        {
-            IEnumerable<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse();
-            List<ListAnswersViewModel> answerList = new List<ListAnswersViewModel>();
-            page++;
-            foreach (var answer in answers.Skip(answers.Count() > PerPage * page ? PerPage * page : PerPage * (page - 1)).Take(PerPage))
-            {
-                UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Id == answer.UserId);
-                answerList.Add(new ListAnswersViewModel()
-                {
-                    Page = page,
-                    AttachmentContentId = answer.Id,
-                    TestName = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Id == answer.TestId).Name,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Course = courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Id == user.CourseId).Number,
-                    Faculty = facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Id == user.FacultyId).Name,
-                    Group = groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Id == user.GroupId).Name,
-                    Speciality = specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Id == user.SpecialityId).Name,
+                    Course = courses.FirstOrDefault(ent => ent.Id == user.CourseId).Number,
+                    Faculty = faculties.FirstOrDefault(ent => ent.Id == user.FacultyId).Name,
+                    Group = groups.FirstOrDefault(ent => ent.Id == user.GroupId).Name,
+                    Speciality = specialities.FirstOrDefault(ent => ent.Id == user.SpecialityId).Name,
                     Mark = answer.Mark
                 });
             }

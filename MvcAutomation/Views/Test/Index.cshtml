@@ -4,22 +4,41 @@
     ViewBag.Title = "Список тестов";
 }
 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/paging")
+
+<script>
+    $(document).ready(function () {
+        $('#page_container').pajinate();
+    });
+</script>
+
 <div id="content">
     <div class="right">
-        @foreach (MvcAutomation.Models.BlockViewModel block in Model)
-        {
-            using (Html.BeginForm("StartTest", "Test", FormMethod.Get))
-            {
-                <fieldset>
-                    <input type="hidden" name="test_name" value="@block.Title" />
-                    <legend>@block.Title</legend>
-                    <div class="articles">
-                        @block.Text
+        <div id="page_container">
+            <div class="page_navigation"></div>
+            <div class="content">
+                @foreach (MvcAutomation.Models.BlockViewModel block in Model)
+                {
+                    <div>
+                        <br />
+                        @using (Html.BeginForm("StartTest", "Test", FormMethod.Get))
+                        {
+                            <fieldset>
+                                <input type="hidden" name="test_name" value="@block.Title" />
+                                <legend>@block.Title</legend>
+                                <div class="articles">
+                                    @block.Text
+                                </div>
+                                <input type="hidden" name="num" value="0" />
+                                <input type="submit" value="Пройти" />
+                            </fieldset>
+                        }
                     </div>
-                    <input type="hidden" name="num" value="0" />
-                    <input type="submit" value="Пройти" />
-                </fieldset>
-            }
-        }
+                }
+            </div>
+            <br />
+            <div class="page_navigation"></div>
+        </div>
     </div>
 </div>

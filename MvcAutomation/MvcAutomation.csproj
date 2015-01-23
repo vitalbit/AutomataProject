@@ -232,6 +232,7 @@
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.countdown.js" />
+    <Content Include="Scripts\jquery.pajinate.js" />
     <Content Include="Scripts\jquery.plugin.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />

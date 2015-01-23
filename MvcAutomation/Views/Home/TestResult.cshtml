@@ -4,13 +4,31 @@
     ViewBag.Title = "Результаты тестов";
 }
 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/paging")
+
+<script>
+    $(document).ready(function () {
+        $('#page_container').pajinate();
+    });
+</script>
+
 <div id="content">
     <div class="right">
-        @foreach (MvcAutomation.Models.TestResultViewModel test in Model)
-        {
+        <div id="page_container">
+            <div class="page_navigation"></div>
+            <div class="content">
+                @foreach (MvcAutomation.Models.TestResultViewModel test in Model)
+                {
+                    <div>
+                        <br />
+                        <label>Имя теста: @test.TestName</label>
+                        <p>Оценка: @test.Result</p>
+                    </div>
+                }
+            </div>
             <br />
-            <label>Имя теста: @test.TestName</label>
-            <p>Оценка: @test.Result</p>
-        }
+            <div class="page_navigation"></div>
+        </div>
     </div>
 </div>
