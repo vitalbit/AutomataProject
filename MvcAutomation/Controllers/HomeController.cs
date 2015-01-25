@@ -19,32 +19,15 @@ namespace MvcAutomation.Controllers
     {
         private readonly IBlockService blockService;
         private readonly IUserService userService;
-        private readonly IFacultyService facultyService;
-        private readonly ICourseService courseService;
-        private readonly IGroupService groupService;
-        private readonly ISpecialityService specialityService;
-        private readonly IBlockTypeService blockTypeService;
-        private readonly IAnswerService answerService;
-        private readonly ITestService testService;
         private readonly ITestConvert convert;
-        private readonly IAttachmentContentService contentService;
+        private readonly IContentService contentService;
 
         public HomeController(IBlockService service1, IUserService service2,
-            IFacultyService service3, ICourseService service4, IGroupService service5,
-            ISpecialityService service6, IBlockTypeService service8,
-            IAnswerService service9, ITestService service10, IAttachmentContentService service11,
-            ITestConvert convert)
+            IContentService service3, ITestConvert convert)
         {
             blockService = service1;
             userService = service2;
-            facultyService = service3;
-            courseService = service4;
-            groupService = service5;
-            specialityService = service6;
-            blockTypeService = service8;
-            answerService = service9;
-            testService = service10;
-            contentService = service11;
+            contentService = service3;
             this.convert = convert;
         }
 
@@ -53,7 +36,7 @@ namespace MvcAutomation.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
+            int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
             return View(blockService.GetAllBlockEntities()
                 .Reverse().Where(entity => entity.BlockTypeId == id)
                 .Select(block => new BlockViewModel()
@@ -114,8 +97,8 @@ namespace MvcAutomation.Controllers
         public ActionResult TestResult()
         {
             UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == User.Identity.Name);
-            List<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse().Where(ent => ent.UserId == user.Id).ToList();
-            List<TestEntity> tests = testService.GetAllTestEntities().ToList();
+            List<AnswerEntity> answers = contentService.GetAllAnswerEntities().Reverse().Where(ent => ent.UserId == user.Id).ToList();
+            List<TestEntity> tests = contentService.GetAllTestEntities().ToList();
             List<TestResultViewModel> results = new List<TestResultViewModel>();
             for (int i = 0; i != answers.Count; i++)
             {
@@ -130,22 +113,22 @@ namespace MvcAutomation.Controllers
         {
             List<SelectListItem> faculties = new List<SelectListItem>();
 
-            foreach (FacultyEntity fe in facultyService.GetAllFacultyEntities())
+            foreach (FacultyEntity fe in userService.GetAllFacultyEntities())
                 faculties.Add(new SelectListItem() { Text = fe.Name });
 
             List<SelectListItem> groups = new List<SelectListItem>();
 
-            foreach (GroupEntity ge in groupService.GetAllGroupEntities())
+            foreach (GroupEntity ge in userService.GetAllGroupEntities())
                 groups.Add(new SelectListItem() { Text = ge.Name });
 
             List<SelectListItem> courses = new List<SelectListItem>();
 
-            foreach (CourseEntity ce in courseService.GetAllCourseEntities())
+            foreach (CourseEntity ce in userService.GetAllCourseEntities())
                 courses.Add(new SelectListItem() { Text = ce.Number.ToString() });
 
             List<SelectListItem> specialities = new List<SelectListItem>();
 
-            foreach (SpecialityEntity se in specialityService.GetAllSpecialityEntities())
+            foreach (SpecialityEntity se in userService.GetAllSpecialityEntities())
                 specialities.Add(new SelectListItem() { Text = se.Name });
 
             ViewBag.Faculties = faculties;
@@ -163,10 +146,10 @@ namespace MvcAutomation.Controllers
             int num = 0;
             if (Int32.TryParse(course, out num))
             {
-                if (courseService.GetAllCourseEntities().Any(ent => ent.Number == num))
+                if (userService.GetAllCourseEntities().Any(ent => ent.Number == num))
                     Session["CourseMessage"] = "Данный курс уже существует";
                 else
-                    courseService.CreateCourse(new CourseEntity() { Number = num });
+                    userService.CreateCourse(new CourseEntity() { Number = num });
             }
             else
                 Session["CourseMessage"] = "Номер курса должен быть числом";
@@ -179,10 +162,10 @@ namespace MvcAutomation.Controllers
         {
             if (group != "")
             {
-                if (groupService.GetAllGroupEntities().Any(ent => ent.Name == group))
+                if (userService.GetAllGroupEntities().Any(ent => ent.Name == group))
                     Session["GroupMessage"] = "Данная группа уже существует";
                 else
-                    groupService.CreateGroup(new GroupEntity() { Name = group });
+                    userService.CreateGroup(new GroupEntity() { Name = group });
             }
             else
                 Session["GroupMessage"] = "Введите название либо номер группы";
@@ -195,10 +178,10 @@ namespace MvcAutomation.Controllers
         {
             if (speciality != "")
             {
-                if (specialityService.GetAllSpecialityEntities().Any(ent => ent.Name == speciality))
+                if (userService.GetAllSpecialityEntities().Any(ent => ent.Name == speciality))
                     Session["SpecialityMessage"] = "Данная специальность уже существует";
                 else
-                    specialityService.CreateSpeciality(new SpecialityEntity() { Name = speciality });
+                    userService.CreateSpeciality(new SpecialityEntity() { Name = speciality });
             }
             else
                 Session["SpecialityMessage"] = "Введите название специальности";
@@ -211,10 +194,10 @@ namespace MvcAutomation.Controllers
         {
             if (faculty != "")
             {
-                if (facultyService.GetAllFacultyEntities().Any(ent => ent.Name == faculty))
+                if (userService.GetAllFacultyEntities().Any(ent => ent.Name == faculty))
                     Session["FacultyMessage"] = "Данный факультет уже существует";
                 else
-                    facultyService.CreateFaculty(new FacultyEntity() { Name = faculty });
+                    userService.CreateFaculty(new FacultyEntity() { Name = faculty });
             }
             else
                 Session["FacultyMessage"] = "Введите навание факультета";
@@ -300,15 +283,15 @@ namespace MvcAutomation.Controllers
             else
             {
                 TestEntity te = new TestEntity() { Name = test_name, TestCount = count, TestTime = time };
-                testService.CreateTest(te);
-                te = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
+                contentService.CreateTest(te);
+                te = contentService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
                 List<AttachmentContentEntity> contents = new List<AttachmentContentEntity>();
                 foreach (var id in sel_test)
                 {
                     contents.Add(contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.Id == id));
                 }
-                testService.SetAttachmentContent(te, contents);
-                int idtype = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
+                contentService.SetAttachmentContent(te, contents);
+                int idtype = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
                 blockService.CreateBlock(new BlockEntity() { Title = te.Name, Text = "", BlockTypeId = idtype });
                 Session["TestResult"] = "Тест создан";
             }
@@ -326,7 +309,7 @@ namespace MvcAutomation.Controllers
         [HttpPost]
         public ActionResult AddNews(string title1, string text)
         {
-            int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
+            int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
             BlockEntity block = new BlockEntity() { Title = title1, Text = text, BlockTypeId = id };
             blockService.CreateBlock(block);
             return View();
@@ -348,7 +331,7 @@ namespace MvcAutomation.Controllers
                 string fileName = Path.GetFileName(file.FileName);
                 string path = Path.Combine(Server.MapPath("~/Material/"), fileName);
                 file.SaveAs(path);
-                int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
+                int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
                 BlockEntity block = new BlockEntity() { Title = fileName, Text = description, BlockTypeId = id };
                 blockService.CreateBlock(block);
                 Session["FileResult"] = "Материал успешно добавлен";
@@ -394,13 +377,7 @@ namespace MvcAutomation.Controllers
         {
             blockService.Dispose();
             userService.Dispose();
-            facultyService.Dispose();
-            groupService.Dispose();
-            courseService.Dispose();
-            specialityService.Dispose();
-            blockTypeService.Dispose();
-            answerService.Dispose();
-            testService.Dispose();
+            contentService.Dispose();
             base.Dispose(disposing);
         }
     }

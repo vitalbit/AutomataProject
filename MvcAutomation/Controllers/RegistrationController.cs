@@ -17,21 +17,10 @@ namespace MvcAutomation.Controllers
     public class RegistrationController : Controller
     {
         private readonly IUserService userService;
-        private readonly IRoleService roleService;
-        private readonly IFacultyService facultyService;
-        private readonly ISpecialityService specialityService;
-        private readonly ICourseService courseService;
-        private readonly IGroupService groupService;
 
-        public RegistrationController(IUserService service1, IRoleService service2, IFacultyService service3,
-            ISpecialityService service4, ICourseService service5, IGroupService service6)
+        public RegistrationController(IUserService service)
         {
-            userService = service1;
-            roleService = service2;
-            facultyService = service3;
-            specialityService = service4;
-            courseService = service5;
-            groupService = service6;
+            userService = service;
         }
 
         public ActionResult Captcha()
@@ -70,7 +59,7 @@ namespace MvcAutomation.Controllers
             if (ModelState.IsValid)
             {
                 MembershipUser memberUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(user.Nickname, user.FirstName, user.LastName, user.Password, user.Email,
-                    null, null, null, null, roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Name == "User").Id);
+                    null, null, null, null, userService.GetAllRoleEntities().FirstOrDefault(ent => ent.Name == "User").Id);
                 if (memberUser != null)
                 {
                     var userEnt = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == user.Nickname);
@@ -95,22 +84,22 @@ namespace MvcAutomation.Controllers
         {
             List<SelectListItem> faculties = new List<SelectListItem>();
 
-            foreach (FacultyEntity fe in facultyService.GetAllFacultyEntities())
+            foreach (FacultyEntity fe in userService.GetAllFacultyEntities())
                 faculties.Add(new SelectListItem() { Text = fe.Name });
 
             List<SelectListItem> groups = new List<SelectListItem>();
 
-            foreach (GroupEntity ge in groupService.GetAllGroupEntities())
+            foreach (GroupEntity ge in userService.GetAllGroupEntities())
                 groups.Add(new SelectListItem() { Text = ge.Name });
 
             List<SelectListItem> courses = new List<SelectListItem>();
 
-            foreach (CourseEntity ce in courseService.GetAllCourseEntities())
+            foreach (CourseEntity ce in userService.GetAllCourseEntities())
                 courses.Add(new SelectListItem() { Text = ce.Number.ToString() });
 
             List<SelectListItem> specialities = new List<SelectListItem>();
 
-            foreach (SpecialityEntity se in specialityService.GetAllSpecialityEntities())
+            foreach (SpecialityEntity se in userService.GetAllSpecialityEntities())
                 specialities.Add(new SelectListItem() { Text = se.Name });
 
             ViewBag.Faculties = faculties;
@@ -125,10 +114,10 @@ namespace MvcAutomation.Controllers
         public ActionResult StepTwo(InformationViewModel information)
         {
             ((CustomMembershipProvider)Membership.Provider).UpdateUser(User.Identity.Name,
-                facultyService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Name == information.Faculty).Id,
-                specialityService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Name == information.Speciality).Id,
-                courseService.GetAllCourseEntities().FirstOrDefault(ent => ent.Number == Int32.Parse(information.Course)).Id,
-                groupService.GetAllGroupEntities().FirstOrDefault(ent => ent.Name == information.Group).Id);
+                userService.GetAllFacultyEntities().FirstOrDefault(ent => ent.Name == information.Faculty).Id,
+                userService.GetAllSpecialityEntities().FirstOrDefault(ent => ent.Name == information.Speciality).Id,
+                userService.GetAllCourseEntities().FirstOrDefault(ent => ent.Number == Int32.Parse(information.Course)).Id,
+                userService.GetAllGroupEntities().FirstOrDefault(ent => ent.Name == information.Group).Id);
             return RedirectToAction("Index", "Home");
         }
 
@@ -142,11 +131,6 @@ namespace MvcAutomation.Controllers
         protected override void Dispose(bool disposing)
         {
             userService.Dispose();
-            roleService.Dispose();
-            facultyService.Dispose();
-            specialityService.Dispose();
-            courseService.Dispose();
-            groupService.Dispose();
             base.Dispose(disposing);
         }
     }

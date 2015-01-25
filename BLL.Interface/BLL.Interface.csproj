@@ -51,16 +51,8 @@
     <Compile Include="Entities\TestEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IAnswerService.cs" />
-    <Compile Include="Services\IAttachmentContentService.cs" />
     <Compile Include="Services\IBlockService.cs" />
-    <Compile Include="Services\IBlockTypeService.cs" />
-    <Compile Include="Services\ICourseService.cs" />
-    <Compile Include="Services\IFacultyService.cs" />
-    <Compile Include="Services\IGroupService.cs" />
-    <Compile Include="Services\IRoleService.cs" />
-    <Compile Include="Services\ISpecialityService.cs" />
-    <Compile Include="Services\ITestService.cs" />
+    <Compile Include="Services\IContentService.cs" />
     <Compile Include="Services\IUserService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

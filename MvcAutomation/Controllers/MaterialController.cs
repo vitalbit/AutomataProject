@@ -12,19 +12,17 @@ namespace MvcAutomation.Controllers
     public class MaterialController : Controller
     {
         private readonly IBlockService blockService;
-        private readonly IBlockTypeService blockTypeService;
 
-        public MaterialController(IBlockService service, IBlockTypeService service1)
+        public MaterialController(IBlockService service)
         {
             blockService = service;
-            blockTypeService = service1;
         }
         //
         // GET: /Material/
 
         public ActionResult Index()
         {
-            int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
+            int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
             return View(blockService.GetAllBlockEntities()
                 .Reverse().Where(ent => ent.BlockTypeId == id)
                 .Select(block => new BlockViewModel()
@@ -37,7 +35,6 @@ namespace MvcAutomation.Controllers
         protected override void Dispose(bool disposing)
         {
             blockService.Dispose();
-            blockTypeService.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -16,31 +16,24 @@ namespace MvcAutomation.Controllers
     public class TestController : Controller
     {
         private readonly IBlockService blockService;
-        private readonly IBlockTypeService blockTypeService;
-        private readonly ITestService testService;
-        private readonly IAttachmentContentService contentService;
+        private readonly IContentService contentService;
         private readonly IUserService userService;
-        private readonly IAnswerService answerService;
         private readonly ITestConvert converter;
         private readonly IGradeSystem grade;
 
-        public TestController(IBlockService service, IBlockTypeService service1,
-            ITestService service2, IAttachmentContentService service3, IUserService service4,
-            IAnswerService service5, ITestConvert converter, IGradeSystem grade)
+        public TestController(IBlockService service1, IContentService service2, 
+            IUserService service3, ITestConvert converter, IGradeSystem grade)
         {
-            blockService = service;
-            blockTypeService = service1;
-            testService = service2;
-            contentService = service3;
-            userService = service4;
-            answerService = service5;
+            blockService = service1;
+            contentService = service2;
+            userService = service3;
             this.converter = converter;
             this.grade = grade;
         }
 
         public ActionResult Index()
         {
-            int id = blockTypeService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
+            int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
             return View(blockService.GetAllBlockEntities()
                 .Reverse().Where(ent => ent.BlockTypeId == id)
                 .Select(block => new BlockViewModel()
@@ -53,8 +46,8 @@ namespace MvcAutomation.Controllers
         [HttpGet]
         public ActionResult StartTest(string test_name, int num)
         {
-            TestEntity test = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
-            List<AttachmentContentEntity> contents = testService.GetAttachmentContents(test).ToList();
+            TestEntity test = contentService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test_name);
+            List<AttachmentContentEntity> contents = contentService.GetAttachmentContents(test).ToList();
             num = new Random().Next(contents.Count);
             NewTestViewModel newTest = converter.getFromBytes(contents[num].Content).ToView();
             if (Request.Cookies["time"] == null)
@@ -120,9 +113,9 @@ namespace MvcAutomation.Controllers
                     Response.Cookies["time"].Expires = DateTime.Now.AddSeconds(5);
                 AttachmentContentEntity content = new AttachmentContentEntity() { Content = converter.getFromNewTest(newTest.ToEntity()) };
                 UserEntity user = userService.GetAllUserEntities().LastOrDefault(ent => ent.Nickname == User.Identity.Name);
-                TestEntity testEnt = testService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test.TestName);
+                TestEntity testEnt = contentService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test.TestName);
 
-                List<AttachmentContentEntity> contents = testService.GetAttachmentContents(testEnt).ToList();
+                List<AttachmentContentEntity> contents = contentService.GetAttachmentContents(testEnt).ToList();
                 NewTestViewModel rightTest = converter.getFromBytes(contents[test.TestNum].Content).ToView();
                 double mark = grade.GradeTest(newTest.ToEntity(), rightTest.ToEntity());
 
@@ -131,7 +124,7 @@ namespace MvcAutomation.Controllers
                 int id = contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.FileName == content.FileName).Id;
 
                 AnswerEntity answer = new AnswerEntity() { Id = id, TestId = testEnt.Id, UserId = user.Id, Mark = mark };
-                answerService.CreateAnswer(answer);
+                contentService.CreateAnswer(answer);
 
                 return RedirectToAction("Index");
             }
@@ -153,11 +146,8 @@ namespace MvcAutomation.Controllers
         protected override void Dispose(bool disposing)
         {
             blockService.Dispose();
-            blockTypeService.Dispose();
-            testService.Dispose();
             contentService.Dispose();
             userService.Dispose();
-            answerService.Dispose();
             base.Dispose(disposing);
         }
     }

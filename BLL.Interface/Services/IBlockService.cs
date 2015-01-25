@@ -12,5 +12,7 @@ namespace BLL.Interface.Services
         IEnumerable<BlockEntity> GetAllBlockEntities();
         IEnumerable<BlockEntity> GetHomeBlocksEntities();
         void CreateBlock(BlockEntity block);
+        IEnumerable<BlockTypeEntity> GetAllBlockTypeEntities();
+        void CreateBlockType(BlockTypeEntity blockType);
     }
 }

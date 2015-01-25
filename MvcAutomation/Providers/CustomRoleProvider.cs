@@ -11,7 +11,6 @@ namespace MvcAutomation.Providers
 {
     public class CustomRoleProvider : RoleProvider
     {
-        IRoleService roleService = (IRoleService)(new NinjectDependencyResolver().GetService(typeof(IRoleService)));
         IUserService userService = (IUserService)(new NinjectDependencyResolver().GetService(typeof(IUserService)));
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
@@ -34,7 +33,7 @@ namespace MvcAutomation.Providers
         public override void CreateRole(string roleName)
         {
             RoleEntity newRole = new RoleEntity() { Name = roleName };
-            roleService.CreateRole(newRole);
+            userService.CreateRole(newRole);
         }
 
         public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
@@ -58,7 +57,7 @@ namespace MvcAutomation.Providers
             UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == username);
             if (user != null)
             {
-                RoleEntity userRole = roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Id == user.RoleId);
+                RoleEntity userRole = userService.GetAllRoleEntities().FirstOrDefault(ent => ent.Id == user.RoleId);
                 if (userRole != null)
                     role = new string[] { userRole.Name };
             }
@@ -75,7 +74,7 @@ namespace MvcAutomation.Providers
             UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == username);
             if (user != null)
             {
-                RoleEntity role = roleService.GetAllRoleEntities().FirstOrDefault(ent => ent.Id == user.RoleId);
+                RoleEntity role = userService.GetAllRoleEntities().FirstOrDefault(ent => ent.Id == user.RoleId);
                 if (role != null && role.Name == roleName)
                     return true;
             }

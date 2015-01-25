@@ -15,11 +15,13 @@ namespace BLL.Services
     {
         private readonly IUnitOfWork uow;
         private readonly IRepository<DalBlock> blockRepository;
+        private readonly IRepository<DalBlockType> blockTypeRepository;
 
         public BlockService(IUnitOfWork uow)
         {
             this.uow = uow;
             this.blockRepository = uow.BlockRepository;
+            this.blockTypeRepository = uow.BlockTypeRepository;
         }
 
         public IEnumerable<BlockEntity> GetAllBlockEntities()
@@ -36,6 +38,17 @@ namespace BLL.Services
         public IEnumerable<BlockEntity> GetHomeBlocksEntities()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<BlockTypeEntity> GetAllBlockTypeEntities()
+        {
+            return blockTypeRepository.GetAll().Select(answ => answ.ToBllBlockType());
+        }
+
+        public void CreateBlockType(BlockTypeEntity blockType)
+        {
+            blockTypeRepository.Create(blockType.ToDalBlockType());
+            uow.Commit();
         }
 
         public void Dispose()

@@ -24,16 +24,8 @@ namespace DependencyResolver
 
             Bind<IUnitOfWork>().To<UnitOfWork>();
 
-            Bind<IAnswerService>().To<AnswerService>();
-            Bind<IAttachmentContentService>().To<AttachmentContentService>();
+            Bind<IContentService>().To<ContentService>();
             Bind<IBlockService>().To<BlockService>();
-            Bind<IBlockTypeService>().To<BlockTypeService>();
-            Bind<ICourseService>().To<CourseService>();
-            Bind<IFacultyService>().To<FacultyService>();
-            Bind<IGroupService>().To<GroupService>();
-            Bind<IRoleService>().To<RoleService>();
-            Bind<ISpecialityService>().To<SpecialityService>();
-            Bind<ITestService>().To<TestService>();
             Bind<IUserService>().To<UserService>();
 
             Bind<ITestConvert>().To<XmlConverter>();

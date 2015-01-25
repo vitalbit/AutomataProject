@@ -9,7 +9,9 @@
 
 <script>
     $(document).ready(function () {
-        $('#page_container').pajinate();
+        $('#page_container').pajinate({
+            abort_on_small_lists: true
+        });
     });
 </script>
 

@@ -13,42 +13,28 @@ namespace MvcAutomation.Controllers
 {
     public class CheckController : Controller
     {
-        private readonly IAnswerService answerService;
         private readonly IUserService userService;
-        private readonly ICourseService courseService;
-        private readonly IFacultyService facultyService;
-        private readonly IGroupService groupService;
-        private readonly ISpecialityService specialityService;
-        private readonly IAttachmentContentService contentService;
-        private readonly ITestService testService;
+        private readonly IContentService contentService;
         private readonly ITestConvert convert;
 
-        public CheckController(IAnswerService service1, IUserService service2, ICourseService service3,
-            IFacultyService service4, IGroupService service5, ISpecialityService service6,
-            IAttachmentContentService service7, ITestService service8, ITestConvert convert)
+        public CheckController(IUserService service1, IContentService service2, ITestConvert convert)
         {
-            answerService = service1;
-            userService = service2;
-            courseService = service3;
-            facultyService = service4;
-            groupService = service5;
-            specialityService = service6;
-            contentService = service7;
-            testService = service8;
+            userService = service1;
+            contentService = service2;
             this.convert = convert;
         }
 
         [HttpGet]
         public ActionResult ListAnswers()
         {
-            IEnumerable<AnswerEntity> answers = answerService.GetAllAnswerEntities().Reverse();
+            IEnumerable<AnswerEntity> answers = contentService.GetAllAnswerEntities().Reverse();
             List<ListAnswersViewModel> answerList = new List<ListAnswersViewModel>();
             IEnumerable<UserEntity> users = userService.GetAllUserEntities();
-            IEnumerable<TestEntity> tests = testService.GetAllTestEntities();
-            IEnumerable<CourseEntity> courses = courseService.GetAllCourseEntities();
-            IEnumerable<FacultyEntity> faculties = facultyService.GetAllFacultyEntities();
-            IEnumerable<GroupEntity> groups = groupService.GetAllGroupEntities();
-            IEnumerable<SpecialityEntity> specialities = specialityService.GetAllSpecialityEntities();
+            IEnumerable<TestEntity> tests = contentService.GetAllTestEntities();
+            IEnumerable<CourseEntity> courses = userService.GetAllCourseEntities();
+            IEnumerable<FacultyEntity> faculties = userService.GetAllFacultyEntities();
+            IEnumerable<GroupEntity> groups = userService.GetAllGroupEntities();
+            IEnumerable<SpecialityEntity> specialities = userService.GetAllSpecialityEntities();
             foreach (var answer in answers)
             {
                 UserEntity user = users.FirstOrDefault(ent => ent.Id == answer.UserId);
@@ -80,12 +66,7 @@ namespace MvcAutomation.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            answerService.Dispose();
             userService.Dispose();
-            courseService.Dispose();
-            facultyService.Dispose();
-            groupService.Dispose();
-            specialityService.Dispose();
             contentService.Dispose();
             base.Dispose(disposing);
         }
