@@ -23,6 +23,10 @@
                 @item.FileName
                 <br />
             }
+            <label>Описание теста</label>
+            <br />
+            @Html.TextArea("description", new { cols = 70, rows = 23 })
+            <br />
             <label>Количество заданий</label>
             <br />
             <input type="text" name="count" />

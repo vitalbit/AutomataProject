@@ -35,6 +35,12 @@
                     @Html.TextBox("Login")
                     @Html.Label("Пароль")
                     @Html.Password("Password")
+                    if (Session["LoginMessage"] != null)
+                    {
+                        <label>@Html.Label((string)Session["LoginMessage"])</label>
+                        <br />
+                        Session["LoginMessage"] = null;
+                    }
                     <p>
                         <br />
                         <input type="submit" value="Вход" />

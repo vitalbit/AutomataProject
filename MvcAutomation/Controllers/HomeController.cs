@@ -17,6 +17,7 @@ namespace MvcAutomation.Controllers
 {
     public class HomeController : Controller
     {
+        //private static string RegExpControl = "";
         private readonly IBlockService blockService;
         private readonly IUserService userService;
         private readonly ITestConvert convert;
@@ -65,7 +66,8 @@ namespace MvcAutomation.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный пароль или логин");
+                    Session["LoginMessage"] = "Неправильный пароль или логин!";
+                    //ModelState.AddModelError("", "Неправильный пароль или логин");
                 }
             }
             return RedirectToAction("Index");
@@ -270,7 +272,7 @@ namespace MvcAutomation.Controllers
 
         [Authorize(Roles="Admin")]
         [HttpPost]
-        public ActionResult AddTest(string test_name, int?[] sel_test, int? count, int? time)
+        public ActionResult AddTest(string test_name, int?[] sel_test, string description, int? count, int? time)
         {
             if (test_name == "")
                 Session["TestResult"] = "Введите имя теста";
@@ -292,7 +294,7 @@ namespace MvcAutomation.Controllers
                 }
                 contentService.SetAttachmentContent(te, contents);
                 int idtype = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Test").Id;
-                blockService.CreateBlock(new BlockEntity() { Title = te.Name, Text = "", BlockTypeId = idtype });
+                blockService.CreateBlock(new BlockEntity() { Title = te.Name, Text = description, BlockTypeId = idtype });
                 Session["TestResult"] = "Тест создан";
             }
             return RedirectToAction("AddTest");
