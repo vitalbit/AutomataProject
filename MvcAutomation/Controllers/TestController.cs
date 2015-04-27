@@ -57,12 +57,16 @@ namespace MvcAutomation.Controllers
             }
             else
             {
-                Response.Cookies["time"].Value = (Int32.Parse(Request.Cookies["time"].Value) - Math.Abs(DateTime.Now.Minute - Int32.Parse(Request.Cookies["min"].Value)) * 60).ToString();
+                int remain = (Int32.Parse(Request.Cookies["time"].Value) - Math.Abs(DateTime.Now.Minute - Int32.Parse(Request.Cookies["min"].Value)) * 60);
+                if (remain < 1)
+                    remain = 1;
+                Response.Cookies["time"].Value = remain.ToString();
             }
             PassingTestViewModel passing = new PassingTestViewModel()
             {
                 TestNum = num,
                 TestName = test.Name,
+                Description = newTest.Description,
                 Regex = newTest.Regex,
                 Values = 1,
                 ValuesArray = new string[1],
@@ -103,6 +107,7 @@ namespace MvcAutomation.Controllers
                 {
                     FinalStates = test.FinalStates,
                     GraphArray = test.GraphArray,
+                    Description = test.Description,
                     Regex = test.Regex,
                     States = test.States,
                     TestName = test.TestName,

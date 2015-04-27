@@ -67,10 +67,16 @@
             }
 
             <br />
-
-            <input type="submit" name="TestWork" id="Send" value="Отправить" />
+            <br />
             <input type="submit" name="TestWork" id="AddValue" value="Добавить значение" />
             <input type="submit" name="TestWork" id="AddState" value="Добавить состояние" />
+            <div class="editor-field">
+                <label>Описание</label>
+                <br />
+                @Html.TextAreaFor(model => model.Description, new { cols = 70, rows = 23 })
+            </div>
+
+            <input type="submit" name="TestWork" id="Send" value="Отправить" />
         }
     </div>
 </div>

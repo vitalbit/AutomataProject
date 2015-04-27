@@ -15,6 +15,7 @@ namespace XMLConvertation
             XDocument doc = XDocument.Parse(str);
             NewTestEntityModel model = new NewTestEntityModel();
             model.Regex = (string)doc.Element("AttachmentContent").Element("Regex");
+            model.Description = (string)doc.Element("AttachmentContent").Element("Description");
             model.States = (int)doc.Element("AttachmentContent").Element("StateCount");
             model.Values = (int)doc.Element("AttachmentContent").Element("ValueCount");
             model.FinalStates = new int?[model.States];
@@ -48,6 +49,7 @@ namespace XMLConvertation
             XDocument doc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"));
             XElement head = new XElement("AttachmentContent");
             head.Add(new XElement("Regex", model.Regex));
+            head.Add(new XElement("Description", model.Description));
             head.Add(new XElement("StateCount", model.States));
             head.Add(new XElement("ValueCount", model.Values));
             XElement valArray = new XElement("ValueArray");

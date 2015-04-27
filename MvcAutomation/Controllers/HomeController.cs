@@ -213,6 +213,7 @@ namespace MvcAutomation.Controllers
             NewTestViewModel test = new NewTestViewModel()
             {
                 TestName = "",
+                Description = "",
                 GraphArray = new string[1],
                 FinalStates = new int?[1],
                 Regex = "",

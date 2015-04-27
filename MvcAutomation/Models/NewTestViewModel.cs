@@ -8,6 +8,7 @@ namespace MvcAutomation.Models
     public class NewTestViewModel
     {
         public string TestName { get; set; }
+        public string Description { get; set; }
         public string Regex { get; set; }
         public string[] GraphArray { get; set; }
         public int States { get; set; }

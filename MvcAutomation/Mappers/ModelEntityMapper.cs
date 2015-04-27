@@ -16,6 +16,7 @@ namespace MvcAutomation.Mappers
             {
                 FinalStates = test.FinalStates,
                 GraphArray = test.GraphArray,
+                Description = test.Description,
                 Regex = test.Regex,
                 States = test.States,
                 TestName = test.TestName,
@@ -30,6 +31,7 @@ namespace MvcAutomation.Mappers
             {
                 FinalStates = test.FinalStates,
                 GraphArray = test.GraphArray,
+                Description = test.Description,
                 Regex = test.Regex,
                 States = test.States,
                 TestName = test.TestName,

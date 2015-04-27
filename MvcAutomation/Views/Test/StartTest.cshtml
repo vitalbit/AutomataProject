@@ -4,8 +4,8 @@
     ViewBag.Title = "Прохождение теста";
 }
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/countdown")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/countdown")
 <script>
     $(function () {
         var dateNow = new Date();
@@ -41,6 +41,7 @@
             @Html.HiddenFor(model => model.TestTime)
             @Html.HiddenFor(model => model.TestName)
             @Html.HiddenFor(model => model.Regex)
+            @Html.HiddenFor(model => model.Description)
 
             <label>Регулярное выражение</label>
             <br />
@@ -89,12 +90,17 @@
             <input type="submit" name="TestWork" id="Send" value="Отправить" />
             <input type="submit" name="TestWork" id="AddValue" value="Добавить значение" />
             <input type="submit" name="TestWork" id="AddState" value="Добавить состояние" />
-            
+
             <br />
             <br />
-            
+
             <div id="counter">
             </div>
+            
+            <label>Описание</label>
+            <br />
+            <span style="white-space: pre-line">@Model.Description</span>
+            <br />
         }
     </div>
 </div>
