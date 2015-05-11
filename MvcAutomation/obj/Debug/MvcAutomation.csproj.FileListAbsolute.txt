@@ -54,3 +54,5 @@ C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\Mv
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\ModelEntityLayer.pdb
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\Systems.pdb
 C:\Users\Виталий\documents\visual studio 2013\Projects\AutomataProject\MvcAutomation\bin\XMLConvertation.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\MvcAutomation\bin\RegexpressionProcess.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\MvcAutomation\bin\RegexpressionProcess.pdb

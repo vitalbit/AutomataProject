@@ -300,6 +300,10 @@
       <Project>{ac55bbbd-bf39-4a3b-a634-f88db42bb934}</Project>
       <Name>ModelEntityLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RegexpressionProcess\RegexpressionProcess.csproj">
+      <Project>{22917504-bfeb-4d97-8745-a332b236a002}</Project>
+      <Name>RegexpressionProcess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Systems\Systems.csproj">
       <Project>{e68d1ea8-3208-49ea-b647-9a58aa727086}</Project>
       <Name>Systems</Name>

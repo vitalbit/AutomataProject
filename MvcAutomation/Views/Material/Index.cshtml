@@ -23,15 +23,18 @@
             <div class="content">
                 @foreach (MvcAutomation.Models.BlockViewModel block in Model)
                 {
+                    <hr />
                     <div>
                         <br />
                         <h2><a href="@Url.Content("~\\Material\\" + block.Title)" download="">@block.Title</a></h2>
                         <div class="articles">
                             @block.Text
                         </div>
+                        <br />
                     </div>
                 }
             </div>
+            <hr />
             <br />
             <div class="page_navigation"></div>
         </div>

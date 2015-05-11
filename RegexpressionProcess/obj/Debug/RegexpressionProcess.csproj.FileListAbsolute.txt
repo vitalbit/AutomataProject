@@ -1,0 +1,4 @@
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\bin\Debug\RegexpressionProcess.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\bin\Debug\RegexpressionProcess.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\obj\Debug\RegexpressionProcess.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\obj\Debug\RegexpressionProcess.pdb

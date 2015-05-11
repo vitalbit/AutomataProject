@@ -13,6 +13,7 @@ using BLL.Services;
 using XMLConvertation;
 using Systems;
 using DAL.Interface.DTO;
+using RegexpressionProcess;
 
 namespace DependencyResolver
 {
@@ -30,6 +31,7 @@ namespace DependencyResolver
 
             Bind<ITestConvert>().To<XmlConverter>();
             Bind<IGradeSystem>().To<GradeSystem>();
+            Bind<IRegExpCheck>().To<RegExpCheck>();
         }
     }
 }

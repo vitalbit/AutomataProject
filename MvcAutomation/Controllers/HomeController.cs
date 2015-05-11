@@ -12,6 +12,7 @@ using MvcAutomation.Providers;
 using XMLConvertation;
 using MvcAutomation.Mappers;
 using System.Text;
+using RegexpressionProcess;
 
 namespace MvcAutomation.Controllers
 {
@@ -22,14 +23,16 @@ namespace MvcAutomation.Controllers
         private readonly IUserService userService;
         private readonly ITestConvert convert;
         private readonly IContentService contentService;
+        private readonly IRegExpCheck regexpCheck;
 
         public HomeController(IBlockService service1, IUserService service2,
-            IContentService service3, ITestConvert convert)
+            IContentService service3, ITestConvert convert, IRegExpCheck regexpCheck)
         {
             blockService = service1;
             userService = service2;
             contentService = service3;
             this.convert = convert;
+            this.regexpCheck = regexpCheck;
         }
 
         //
@@ -249,10 +252,14 @@ namespace MvcAutomation.Controllers
             }
             if (TestWork == "Отправить")
             {
-                if (test.Regex == null)
+                if (test.Description == null)
+                    Session["CreateMessage"] = "Описание не должно быть пусто";
+                else if (test.Regex == null)
                     Session["CreateMessage"] = "Регулярное выражение не должно быть пусто";
                 else if (test.TestName == null)
                     Session["CreateMessage"] = "Имя теста не должно быть пустым";
+                else if (!regexpCheck.isMatchesToDescription(test.Description, test.Regex))
+                    Session["CreateMessage"] = "Регулярное выражение не соответствует описанию";
                 else
                 {
                     AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test.ToEntity()), FileName = test.TestName };
@@ -315,7 +322,7 @@ namespace MvcAutomation.Controllers
             int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Home").Id;
             BlockEntity block = new BlockEntity() { Title = title1, Text = text, BlockTypeId = id };
             blockService.CreateBlock(block);
-            return View();
+            return RedirectToAction("Index"); //View();
         }
 
         [Authorize(Roles="Admin")]

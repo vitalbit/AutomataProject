@@ -77,6 +77,10 @@
       <Project>{14cf7826-9beb-4115-b008-72266809866e}</Project>
       <Name>ORM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RegexpressionProcess\RegexpressionProcess.csproj">
+      <Project>{22917504-bfeb-4d97-8745-a332b236a002}</Project>
+      <Name>RegexpressionProcess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Systems\Systems.csproj">
       <Project>{e68d1ea8-3208-49ea-b647-9a58aa727086}</Project>
       <Name>Systems</Name>
