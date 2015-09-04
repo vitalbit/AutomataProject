@@ -1,0 +1,14 @@
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\XMLConvertation.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\XMLConvertation.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\ModelEntityLayer.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\ModelEntityLayer.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\obj\Release\XMLConvertation.csprojResolveAssemblyReference.cache
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\obj\Release\XMLConvertation.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\obj\Release\XMLConvertation.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\XMLConvertation.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\XMLConvertation.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\ModelEntityLayer.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\bin\Release\ModelEntityLayer.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\obj\Release\XMLConvertation.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\obj\Release\XMLConvertation.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\XMLConvertation\obj\Release\XMLConvertation.pdb

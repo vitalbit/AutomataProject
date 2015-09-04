@@ -1,0 +1,8 @@
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\bin\Release\BLL.Interface.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\bin\Release\BLL.Interface.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\obj\Release\BLL.Interface.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\obj\Release\BLL.Interface.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\bin\Release\BLL.Interface.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\bin\Release\BLL.Interface.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\obj\Release\BLL.Interface.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\BLL.Interface\obj\Release\BLL.Interface.pdb

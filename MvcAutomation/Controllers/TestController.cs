@@ -83,56 +83,56 @@ namespace MvcAutomation.Controllers
         public ActionResult StartTest(PassingTestViewModel test, string TestWork)
         {
             ModelState.Clear();
-            if (TestWork == "Добавить значение")
-            {
-                ++test.Values;
-                string[] temp = test.ValuesArray;
-                test.ValuesArray = new string[test.Values];
-                temp.CopyTo(test.ValuesArray, 0);
-                test = GetNewGraph(test);
-            }
-            if (TestWork == "Добавить состояние")
-            {
-                ++test.States;
-                int?[] temp = test.FinalStates;
-                test.FinalStates = new int?[test.States];
-                temp.CopyTo(test.FinalStates, 0);
-                string[] temp2 = test.GraphArray;
-                test.GraphArray = new string[test.States * test.Values];
-                temp2.CopyTo(test.GraphArray, 0);
-            }
-            if (TestWork == "Отправить")
-            {
-                NewTestViewModel newTest = new NewTestViewModel()
-                {
-                    FinalStates = test.FinalStates,
-                    GraphArray = test.GraphArray,
-                    Description = test.Description,
-                    Regex = test.Regex,
-                    States = test.States,
-                    TestName = test.TestName,
-                    Values = test.Values,
-                    ValuesArray = test.ValuesArray
-                };
-                if (Request.Cookies["time"] != null)
-                    Response.Cookies["time"].Expires = DateTime.Now.AddSeconds(5);
-                AttachmentContentEntity content = new AttachmentContentEntity() { Content = converter.getFromNewTest(newTest.ToEntity()) };
-                UserEntity user = userService.GetAllUserEntities().LastOrDefault(ent => ent.Nickname == User.Identity.Name);
-                TestEntity testEnt = contentService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test.TestName);
+            //if (TestWork == "Добавить значение")
+            //{
+            //    ++test.Values;
+            //    string[] temp = test.ValuesArray;
+            //    test.ValuesArray = new string[test.Values];
+            //    temp.CopyTo(test.ValuesArray, 0);
+            //    test = GetNewGraph(test);
+            //}
+            //if (TestWork == "Добавить состояние")
+            //{
+            //    ++test.States;
+            //    int?[] temp = test.FinalStates;
+            //    test.FinalStates = new int?[test.States];
+            //    temp.CopyTo(test.FinalStates, 0);
+            //    string[] temp2 = test.GraphArray;
+            //    test.GraphArray = new string[test.States * test.Values];
+            //    temp2.CopyTo(test.GraphArray, 0);
+            //}
+            //if (TestWork == "Отправить")
+            //{
+            //    NewTestViewModel newTest = new NewTestViewModel()
+            //    {
+            //        FinalStates = test.FinalStates,
+            //        GraphArray = test.GraphArray,
+            //        Description = test.Description,
+            //        Regex = test.Regex,
+            //        States = test.States,
+            //        TestName = test.TestName,
+            //        Values = test.Values,
+            //        ValuesArray = test.ValuesArray
+            //    };
+            //    if (Request.Cookies["time"] != null)
+            //        Response.Cookies["time"].Expires = DateTime.Now.AddSeconds(5);
+            //    AttachmentContentEntity content = new AttachmentContentEntity() { Content = converter.getFromNewTest(newTest.ToEntity()) };
+            //    UserEntity user = userService.GetAllUserEntities().LastOrDefault(ent => ent.Nickname == User.Identity.Name);
+            //    TestEntity testEnt = contentService.GetAllTestEntities().FirstOrDefault(ent => ent.Name == test.TestName);
 
-                List<AttachmentContentEntity> contents = contentService.GetAttachmentContents(testEnt).ToList();
-                NewTestViewModel rightTest = converter.getFromBytes(contents[test.TestNum].Content).ToView();
-                double mark = grade.GradeTest(newTest.ToEntity(), rightTest.ToEntity());
+            //    List<AttachmentContentEntity> contents = contentService.GetAttachmentContents(testEnt).ToList();
+            //    NewTestViewModel rightTest = converter.getFromBytes(contents[test.TestNum].Content).ToView();
+            //    double mark = grade.GradeTest(newTest.ToEntity(), rightTest.ToEntity());
 
-                content.FileName = User.Identity.Name + Guid.NewGuid().ToString();
-                contentService.CreateAttachmentContent(content);
-                int id = contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.FileName == content.FileName).Id;
+            //    content.FileName = User.Identity.Name + Guid.NewGuid().ToString();
+            //    contentService.CreateAttachmentContent(content);
+            //    int id = contentService.GetAllAttachmentContentEntities().FirstOrDefault(ent => ent.FileName == content.FileName).Id;
 
-                AnswerEntity answer = new AnswerEntity() { Id = id, TestId = testEnt.Id, UserId = user.Id, Mark = mark };
-                contentService.CreateAnswer(answer);
+            //    AnswerEntity answer = new AnswerEntity() { Id = id, TestId = testEnt.Id, UserId = user.Id, Mark = mark };
+            //    contentService.CreateAnswer(answer);
 
-                return RedirectToAction("Index");
-            }
+            //    return RedirectToAction("Index");
+            //}
             return View(test);
         }
 

@@ -1,0 +1,9 @@
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\bin\Release\ModelEntityLayer.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\bin\Release\ModelEntityLayer.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\obj\Release\ModelEntityLayer.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\obj\Release\ModelEntityLayer.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\bin\Release\ModelEntityLayer.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\bin\Release\ModelEntityLayer.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\obj\Release\ModelEntityLayer.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\obj\Release\ModelEntityLayer.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\ModelEntityLayer\obj\Release\ModelEntityLayer.csprojResolveAssemblyReference.cache

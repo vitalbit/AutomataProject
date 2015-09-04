@@ -18,7 +18,7 @@ namespace XMLConvertation
             model.Description = (string)doc.Element("AttachmentContent").Element("Description");
             model.States = (int)doc.Element("AttachmentContent").Element("StateCount");
             model.Values = (int)doc.Element("AttachmentContent").Element("ValueCount");
-            model.FinalStates = new int?[model.States];
+            model.FinalStates = new bool?[model.States];
             model.ValuesArray = new string[model.Values];
             model.GraphArray = new string[model.States * model.Values];
             int i = 0;
@@ -29,8 +29,8 @@ namespace XMLConvertation
             i = 0;
             foreach (XElement element in doc.Element("AttachmentContent").Element("StateArray").Elements("State"))
             {
-                int num;
-                if (Int32.TryParse((string)element, out num))
+                bool num;
+                if (Boolean.TryParse((string)element, out num))
                     model.FinalStates[i++] = num;
             }
             i = 0;

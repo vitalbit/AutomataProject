@@ -1,0 +1,8 @@
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\bin\Release\RegexpressionProcess.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\bin\Release\RegexpressionProcess.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\obj\Release\RegexpressionProcess.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\obj\Release\RegexpressionProcess.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\bin\Release\RegexpressionProcess.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\bin\Release\RegexpressionProcess.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\obj\Release\RegexpressionProcess.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\RegexpressionProcess\obj\Release\RegexpressionProcess.pdb

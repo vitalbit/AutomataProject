@@ -14,7 +14,7 @@ namespace ModelEntityLayer
         public string[] GraphArray { get; set; }
         public int States { get; set; }
         public int Values { get; set; }
-        public int?[] FinalStates { get; set; }
+        public bool?[] FinalStates { get; set; }
         public string[] ValuesArray { get; set; }
     }
 }

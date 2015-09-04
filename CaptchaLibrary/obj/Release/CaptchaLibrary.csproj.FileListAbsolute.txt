@@ -1,0 +1,10 @@
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\bin\Release\CaptchaLibrary.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\bin\Release\CaptchaLibrary.pdb
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Release\CaptchaLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Release\CaptchaLibrary.dll
+C:\Users\Виталий\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Release\CaptchaLibrary.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\bin\Release\CaptchaLibrary.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\bin\Release\CaptchaLibrary.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Release\CaptchaLibrary.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Release\CaptchaLibrary.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\AutomataProject\CaptchaLibrary\obj\Release\CaptchaLibrary.pdb

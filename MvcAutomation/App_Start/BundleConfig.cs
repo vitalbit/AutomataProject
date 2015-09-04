@@ -48,6 +48,18 @@ namespace MvcAutomation
             bundles.Add(new ScriptBundle("~/bundles/paging").Include(
                 "~/Scripts/jquery.pajinate.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                "~/Scripts/angular.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/testBundle").Include(
+                "~/Scripts/testScripts/testController.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/bundles/testCss").Include(
+                "~/Scripts/testScripts/css/style.css"
+                ));
         }
     }
 }

@@ -56,21 +56,28 @@ namespace MvcAutomation.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(login, password))
+                try
                 {
-                    FormsAuthentication.SetAuthCookie(login, true);
-                    var user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == login);
-                    if (user != null)
+                    if (Membership.ValidateUser(login, password))
                     {
-                        Response.Cookies["user_name"].Value = Convert.ToBase64String(Encoding.Default.GetBytes(user.FirstName));
-                        Response.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);
+                        FormsAuthentication.SetAuthCookie(login, true);
+                        var user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == login);
+                        if (user != null)
+                        {
+                            Response.Cookies["user_name"].Value = Convert.ToBase64String(Encoding.Default.GetBytes(user.FirstName));
+                            Response.Cookies["user_name"].Expires = DateTime.Now.AddDays(2);
+                        }
+                        return RedirectToAction("Index");
                     }
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        Session["LoginMessage"] = "Неправильный пароль или логин!";
+                        //ModelState.AddModelError("", "Неправильный пароль или логин");
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    Session["LoginMessage"] = "Неправильный пароль или логин!";
-                    //ModelState.AddModelError("", "Неправильный пароль или логин");
+                    return Content(e.Message);
                 }
             }
             return RedirectToAction("Index");
@@ -98,7 +105,7 @@ namespace MvcAutomation.Controllers
             return View();
         }
 
-        [Authorize(Roles="User")]
+        [Authorize(Roles = "User")]
         public ActionResult TestResult()
         {
             UserEntity user = userService.GetAllUserEntities().FirstOrDefault(ent => ent.Nickname == User.Identity.Name);
@@ -112,7 +119,7 @@ namespace MvcAutomation.Controllers
             return View(results);
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult DbEdit()
         {
@@ -144,7 +151,7 @@ namespace MvcAutomation.Controllers
             return View();
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddCourse(string course)
         {
@@ -161,7 +168,7 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddGroup(string group)
         {
@@ -177,7 +184,7 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddSpeciality(string speciality)
         {
@@ -193,7 +200,7 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddFaculty(string faculty)
         {
@@ -209,68 +216,36 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("DbEdit");
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult CreateTest()
         {
-            NewTestViewModel test = new NewTestViewModel()
-            {
-                TestName = "",
-                Description = "",
-                GraphArray = new string[1],
-                FinalStates = new int?[1],
-                Regex = "",
-                States = 1,
-                Values = 1,
-                ValuesArray = new string[1]
-            };
-            return View(test);
+            return View();
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult CreateTest(NewTestViewModel test, string TestWork)
+        public ActionResult CreateTest(NewTestViewModel test)
         {
-            ModelState.Clear();
-            if (TestWork == "Добавить значение")
+            string createMessage;
+            if (test.Description == null)
+                createMessage = "Описание не должно быть пусто";
+            else if (test.Regex == null)
+                createMessage = "Регулярное выражение не должно быть пусто";
+            else if (test.TestName == null)
+                createMessage = "Имя теста не должно быть пустым";
+            else if (!regexpCheck.isMatchesToDescription(test.Description, test.Regex))
+                createMessage = "Регулярное выражение не соответствует описанию";
+            else
             {
-                ++test.Values;
-                string[] temp = test.ValuesArray;
-                test.ValuesArray = new string[test.Values];
-                temp.CopyTo(test.ValuesArray, 0);
-                test = GetNewGraph(test);
+                AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test.ToEntity()), FileName = test.TestName };
+                contentService.CreateAttachmentContent(content);
+                return Json(new { redir = "Ok" });
             }
-            if (TestWork == "Добавить состояние")
-            {
-                ++test.States;
-                int?[] temp = test.FinalStates;
-                test.FinalStates = new int?[test.States];
-                temp.CopyTo(test.FinalStates, 0);
-                string[] temp2 = test.GraphArray;
-                test.GraphArray = new string[test.States * test.Values];
-                temp2.CopyTo(test.GraphArray, 0);
-            }
-            if (TestWork == "Отправить")
-            {
-                if (test.Description == null)
-                    Session["CreateMessage"] = "Описание не должно быть пусто";
-                else if (test.Regex == null)
-                    Session["CreateMessage"] = "Регулярное выражение не должно быть пусто";
-                else if (test.TestName == null)
-                    Session["CreateMessage"] = "Имя теста не должно быть пустым";
-                else if (!regexpCheck.isMatchesToDescription(test.Description, test.Regex))
-                    Session["CreateMessage"] = "Регулярное выражение не соответствует описанию";
-                else
-                {
-                    AttachmentContentEntity content = new AttachmentContentEntity() { Content = convert.getFromNewTest(test.ToEntity()), FileName = test.TestName };
-                    contentService.CreateAttachmentContent(content);
-                    return RedirectToAction("Index");
-                }
-            }
-            return View(test);
+            return Json(new { redir = "No", message = createMessage });
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult AddTest()
         {
@@ -278,7 +253,7 @@ namespace MvcAutomation.Controllers
             return View(content);
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddTest(string test_name, int?[] sel_test, string description, int? count, int? time)
         {
@@ -308,14 +283,14 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("AddTest");
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult AddNews()
         {
             return View();
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddNews(string title1, string text)
         {
@@ -325,29 +300,36 @@ namespace MvcAutomation.Controllers
             return RedirectToAction("Index"); //View();
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult AddMaterial()
         {
             return View();
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddMaterial(string description, HttpPostedFileBase file)
         {
-            if (file != null && file.ContentLength > 0)
+            try
             {
-                string fileName = Path.GetFileName(file.FileName);
-                string path = Path.Combine(Server.MapPath("~/Material/"), fileName);
-                file.SaveAs(path);
-                int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
-                BlockEntity block = new BlockEntity() { Title = fileName, Text = description, BlockTypeId = id };
-                blockService.CreateBlock(block);
-                Session["FileResult"] = "Материал успешно добавлен";
+                if (file != null && file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(file.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Material/"), fileName);
+                    file.SaveAs(path);
+                    int id = blockService.GetAllBlockTypeEntities().FirstOrDefault(ent => ent.Name == "Material").Id;
+                    BlockEntity block = new BlockEntity() { Title = fileName, Text = description, BlockTypeId = id };
+                    blockService.CreateBlock(block);
+                    Session["FileResult"] = "Материал успешно добавлен";
+                }
+                else
+                    Session["FileResult"] = "Загрузите файл";
             }
-            else
-                Session["FileResult"] = "Загрузите файл";
+            catch (Exception e)
+            {
+                return Content(e.Message);
+            }
             return View();
         }
 
@@ -369,18 +351,6 @@ namespace MvcAutomation.Controllers
         public ActionResult NotFound()
         {
             return View();
-        }
-
-        private NewTestViewModel GetNewGraph(NewTestViewModel test)
-        {
-            string[] temp = test.GraphArray;
-            test.GraphArray = new string[test.States * test.Values];
-            for (int i = 0; i != test.States; i++)
-            {
-                for (int j = 0; j != test.Values - 1; j++)
-                    test.GraphArray[i * test.Values + j] = temp[i * (test.Values - 1) + j];
-            }
-            return test;
         }
 
         protected override void Dispose(bool disposing)
